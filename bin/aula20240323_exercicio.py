@@ -7,8 +7,6 @@
 
 arq = "data/texto.txt"
 fh = open(arq)
-print(fh)
-fh.seek(0)
 tokens = fh.read().split()
 
 # cria um dicionario vazio
