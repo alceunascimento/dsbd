@@ -6,7 +6,7 @@ sistema chave : valor, exemplo, palavras : 12
 quando a plavra repete, tem que contar uma vez somente
 """
 
-arq = "data/texto.txt"
+arq = "data/acordao.txt"
 fh = open(arq)
 tokens = fh.read().split()
 
