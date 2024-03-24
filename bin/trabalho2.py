@@ -284,6 +284,7 @@ with open(path_new, 'w', newline='') as file:
 
 
 ### Uniforming 'status' 
+#### Assuming that 
 
 #### Checking errors
     
@@ -315,9 +316,38 @@ else:
 
 
 
+#### Applying corrections
+  
+def apply_corrections(data, errors):
+    for error in errors:
+        index, current_status, expected_status = error
+        if current_status == 'Matriculado':
+            data[index]['status'] = expected_status
+
+# Supondo que você já executou a função check_errors e tem os erros armazenados em 'errors'
+errors = check_errors(data_clean_noOutliers_noDuplicates)
+
+# Aplicar correções com base nos erros identificados
+apply_corrections(data_clean_noOutliers_noDuplicates, errors)
+
+# Opcional: Verificar novamente para garantir que todas as correções foram aplicadas
+errors_after_correction = check_errors(data_clean_noOutliers_noDuplicates)
+if errors_after_correction:
+    for error in errors_after_correction:
+        print(f"Row {error[0]}: Incorrect status '{error[1]}', expected '{error[2]}'")
+else:
+    print("All errors have been corrected. No errors found.")
 
 
 
+### Save the new dataframe cleand as CSV file
+path_new = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean2.csv'
+headers = data_clean_noOutliers_noDuplicates[0].keys()
+with open(path_new, 'w', newline='') as file:
+    writer = csv.DictWriter(file, fieldnames=headers)
+    writer.writeheader()  # Escreve os cabeçalhos das colunas
+    for line in data_clean_noOutliers_noDuplicates:
+        writer.writerow(line)
 
 
 
