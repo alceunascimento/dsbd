@@ -184,6 +184,7 @@ for row in data_clean:
     if row['tipo'] == 'EQUIVALENCIA' and int(row['nota']) == 0:
         notas_zero_equivalencia.append(row)
 
+"""
 headers = list(notas_zero_equivalencia[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in notas_zero_equivalencia)) for col in headers]
 header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
@@ -191,7 +192,7 @@ print(header_line)
 print("-" * len(header_line))
 for row in notas_zero_equivalencia:
     print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
-
+"""
 
 ##### list of non zero grades
 notas_nonzero_equivalencia = []
@@ -199,6 +200,7 @@ for row in data_clean:
     if row['tipo'] == 'EQUIVALENCIA' and int(row['nota']) != 0:
         notas_nonzero_equivalencia.append(row)
 
+"""
 headers = list(notas_nonzero_equivalencia[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in notas_nonzero_equivalencia)) for col in headers]
 header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
@@ -206,7 +208,7 @@ print(header_line)
 print("-" * len(header_line))
 for row in notas_nonzero_equivalencia:
     print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
-
+"""
 
 
 #### removing data of 'tipo' de 'APROVEITAMENTO'
@@ -215,6 +217,7 @@ for row in data_clean:
     if row['tipo'] == 'APROVEITAMENTO':
         notas_aproveitamento.append(row)
 
+"""
 headers = list(notas_aproveitamento[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in notas_aproveitamento)) for col in headers]
 header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
@@ -222,7 +225,7 @@ print(header_line)
 print("-" * len(header_line))
 for row in notas_aproveitamento:
     print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
-
+"""
 
 #### Combine list to remove from dataframe
 outliers = notas_zero_equivalencia + notas_nonzero_equivalencia + notas_aproveitamento
@@ -267,6 +270,7 @@ data_clean_noOutliers_noDuplicates = [row for row in data_clean_noOutliers if ro
 
 
 #------------------------------------------------------------------------
+
 # Print new dataframe cleaned
 headers = list(data_clean_noOutliers_noDuplicates[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in data_clean_noOutliers_noDuplicates)) for col in headers]
@@ -334,13 +338,6 @@ errors = check_errors(data_clean_noOutliers_noDuplicates)
 # Aplicar correções com base nos erros identificados
 apply_corrections(data_clean_noOutliers_noDuplicates, errors)
 
-# Opcional: Verificar novamente para garantir que todas as correções foram aplicadas
-errors_after_correction = check_errors(data_clean_noOutliers_noDuplicates)
-if errors_after_correction:
-    for error in errors_after_correction:
-        print(f"Row {error[0]}: Incorrect status '{error[1]}', expected '{error[2]}'")
-else:
-    print("All errors have been corrected. No errors found.")
 
 
 
@@ -686,28 +683,3 @@ print("-" * len(header_line))
 print(f"")
 
 
-#------------------------------------------------------------------------
-# ANEXOS
-#------------------------------------------------------------------------
-print("-" * len(header_line))
-print("-" * len(header_line))
-print("APENDICE")
-print("-" * len(header_line))
-print("-" * len(header_line))
-
-### dataframe clean
-print("1. Dataframe limpo")
-#------------------------------------------------------------------------
-col_widths = [max(len(str(item)) for item in col) for col in zip(*data_clean_raw)]
-header = data_clean_raw[0]
-header_line = " | ".join(f"{item:{col_widths[i]}}" for i, item in enumerate(header))
-print(header_line)
-print("-" * len(header_line))
-for row in data_clean_raw[1:]:
-    print(" | ".join(f"{str(item):{col_widths[i]}}" for i, item in enumerate(row)))
-
-
-
-print("2. relatório de analise e limpeza dos dados")
-
-print("3. valores de referencia")
