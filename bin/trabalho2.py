@@ -273,7 +273,7 @@ for row in data_clean_noOutliers_noDuplicates:
 
 ### Save the new dataframe cleand as CSV file
 path_new = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean1.csv'
-with open(path_new, 'w', newline='') as file:
+with open(path_new, 'w') as file:
     writer = csv.writer(file)
     for line in data_clean_noOutliers_noDuplicates:
         writer.writerow(line)
