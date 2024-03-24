@@ -275,7 +275,7 @@ for row in data_clean_noOutliers_noDuplicates:
 path_new = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean1.csv'
 with open(path_new, 'w', newline='') as file:
     writer = csv.writer(file)
-    for line in data_clean:
+    for line in data_clean_noOutliers_noDuplicates:
         writer.writerow(line)
 
 
