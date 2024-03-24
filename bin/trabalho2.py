@@ -278,6 +278,8 @@ with open(path_new, 'w') as file:
     for line in data_clean_noOutliers_noDuplicates:
         writer.writerow(line)
 
+data_clean_noOutliers_noDuplicates
+
 
 
 ### Uniforming 'status' 
