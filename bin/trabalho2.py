@@ -45,6 +45,7 @@ Considere como anos de pandemia os anos de 2020 e 2021.
 # SETUP 
 import csv
 import re
+dir()
 
 # GET DATA
 
@@ -60,8 +61,7 @@ with open(path, 'r', newline='') as file:
     # Iterar sobre as linhas do CSV e adicioná-las à lista
     for line in reader:
         data.append(line)
-
-
+data
 
 # CLEAN DATA
 """
@@ -76,7 +76,7 @@ with open(path, 'r', newline='') as file:
 """
 
 ## Setting a new dataframe cleaned
-target_variables = [0, 4, 7, 8, 9, 10]  
+target_variables = [0, 3, 4, 7, 8, 9, 10]  
 data_clean = [[line[i] for i in target_variables] for line in data]
 
 ### Print for better visual
@@ -89,7 +89,7 @@ for row in data_clean[1:]:
     print(" | ".join(f"{str(item):{col_widths[i]}}" for i, item in enumerate(row)))
 
 ### Save the new dataframe cleand as CSV file
-path_new = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean.csv'
+path_new = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean0.csv'
 with open(path_new, 'w', newline='') as file:
     writer = csv.writer(file)
     for line in data_clean:
@@ -100,6 +100,7 @@ with open(path_new, 'w', newline='') as file:
        
 ### Lista para armazenar as linhas do CSV
 data_clean = []
+data_clean
 
 ### Open CSV (use Dic.Reader to dictionary output)
 with open(path_new, 'r', newline='') as file:
@@ -112,6 +113,8 @@ data_clean[0]
 ### checar os valores das variaveis
 value_matricula = {line['matricula'] for line in data_clean}
 value_matricula
+value_periodo = {line['periodo'] for line in data_clean}
+value_periodo
 value_ano = {line['ano'] for line in data_clean}
 value_ano
 value_nota = {line['nota'] for line in data_clean}
@@ -223,24 +226,113 @@ for row in notas_aproveitamento:
 #### Combine list to remove from dataframe
 outliers = notas_zero_equivalencia + notas_nonzero_equivalencia + notas_aproveitamento
 
-# Crie uma nova lista de 'data_clean' excluindo as linhas que estão em 'linhas_para_remover'
+#### Crie um novo dataframe de 'data_clean' excluindo as linhas que estão em 'linhas_para_remover'
 data_clean_noOutliers = [row for row in data_clean if row not in outliers]
-
-# Print new dataframe cleaned
-headers = list(data_clean_noOutliers[0].keys())
-col_widths = [max(len(str(item)) for item in (row[col] for row in data_clean_noOutliers)) for col in headers]
-header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
-print(header_line)
-print("-" * len(header_line))
-for row in data_clean_noOutliers:
-    print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
-
-
-
 
 
 ### Removing duplicates
 
+# Open a blanik set for uniques
+unique = set()
+
+# Open a list for duplicates
+duplicates = []
+
+for row in data_clean_noOutliers:
+    # Convert list (dict) to tuple (hashable)
+    row_tuple = tuple(sorted(row.items()))
+    
+    # Conditions
+    if row_tuple in unique:
+        # If yes, add to duplicates
+        duplicates.append(row)
+    else:
+        # If not, add to uniques
+        unique.add(row_tuple)
+
+# Now duplicates has all duplicates found
+if duplicates:
+    print(f"Duplicates found: {len(duplicates)} rows.")
+else:
+    print("There are no duplicates.")
+
+duplicates
+
+#### Set a new dataframe from 'data_clean_nonOutliers' deleting duplicates
+data_clean_noOutliers_noDuplicates = [row for row in data_clean_noOutliers if row not in duplicates]
+
+# Print new dataframe cleaned
+headers = list(data_clean_noOutliers_noDuplicates[0].keys())
+col_widths = [max(len(str(item)) for item in (row[col] for row in data_clean_noOutliers_noDuplicates)) for col in headers]
+header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print(header_line)
+print("-" * len(header_line))
+for row in data_clean_noOutliers_noDuplicates:
+    print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
+
+
+### Save the new dataframe cleand as CSV file
+path_new = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean1.csv'
+with open(path_new, 'w', newline='') as file:
+    writer = csv.writer(file)
+    for line in data_clean:
+        writer.writerow(line)
+
+
+
+### Uniforming 'status' 
+
+#### Checking errors
+    
+def check_errors(data):
+    errors = []
+    for i, row in enumerate(data):
+        expected_status = ''
+        if row['frequencia'] < 75:
+            expected_status = 'R-freq'
+        elif row['frequencia'] >= 75 and row['nota'] < 50:
+            expected_status = "R-nota"
+        elif row['frequencia'] >= 75 and row['nota'] >= 50:
+            expected_status = 'Aprovado'
+        # Assuming other status determination rules here if needed
+        
+        if row['status'] != expected_status:
+            errors.append((i, row['status'], expected_status))
+    
+    return errors
+
+# Check for errors
+errors = check_errors(data_clean_noOutliers_noDuplicates)
+
+if errors:
+    for error in errors:
+        print(f"Row {error[0]}: Incorrect status '{error[1]}', expected '{error[2]}'")
+else:
+    print("No errors found.")
+
+
+
+
+
+
+
+
+
+
+
+
+#### There should be only two values for failed 'R-freq' or 'R-nota'
+status = []
+
+
+for row in data_clean_noOutliers_noDuplicates:
+    if row['status'] == 'APROVEITAMENTO':
+        notas_aproveitamento.append(row)
+
+
+unique_statuses = {row['status'] for row in data_clean_noOutliers_noDuplicates}
+
+print(unique_statuses)
 
 
 # ANALYSE DATA
