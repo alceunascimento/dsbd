@@ -150,7 +150,7 @@ def verificar_e_converter_inteiros(data_clean):
 #### Iterate transformation
 verificar_e_converter_inteiros(data_clean)
 
-
+type(data_clean[0]['nota'])
 
 ### Find missing values 
 
@@ -229,6 +229,8 @@ outliers = notas_zero_equivalencia + notas_nonzero_equivalencia + notas_aproveit
 #### Crie um novo dataframe de 'data_clean' excluindo as linhas que estão em 'linhas_para_remover'
 data_clean_noOutliers = [row for row in data_clean if row not in outliers]
 
+type(data_clean[0]['nota'])
+type(data_clean_noOutliers[0]['nota'])
 
 ### Removing duplicates
 
@@ -261,6 +263,9 @@ duplicates
 #### Set a new dataframe from 'data_clean_nonOutliers' deleting duplicates
 data_clean_noOutliers_noDuplicates = [row for row in data_clean_noOutliers if row not in duplicates]
 
+type(data_clean_noOutliers_noDuplicates[0]['nota'])
+
+
 # Print new dataframe cleaned
 headers = list(data_clean_noOutliers_noDuplicates[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in data_clean_noOutliers_noDuplicates)) for col in headers]
@@ -284,7 +289,7 @@ with open(path_new, 'w', newline='') as file:
 
 
 ### Uniforming 'status' 
-#### Assuming that 
+#### Assuming that 'Matriculado' deveria ser 'R-nota' ou 'R-freq'
 
 #### Checking errors
     
@@ -317,7 +322,7 @@ else:
 
 
 #### Applying corrections
-  
+
 def apply_corrections(data, errors):
     for error in errors:
         index, current_status, expected_status = error
@@ -350,25 +355,29 @@ with open(path_new, 'w', newline='') as file:
         writer.writerow(line)
 
 
+# Setting final dataframe
+data_clean_final = data_clean_noOutliers_noDuplicates
 
 
-
-
-#### There should be only two values for failed 'R-freq' or 'R-nota'
-status = []
-
-
-for row in data_clean_noOutliers_noDuplicates:
-    if row['status'] == 'APROVEITAMENTO':
-        notas_aproveitamento.append(row)
-
-
-unique_statuses = {row['status'] for row in data_clean_noOutliers_noDuplicates}
-
-print(unique_statuses)
-
+# CLEANING MEMORY
+dir()
+del(data, data_clean, data_clean_noOutliers, data_clean_noOutliers_noDuplicates)
+del(notas_aproveitamento, notas_nonzero_equivalencia,value_ano,value_freq,value_matricula, value_nota, value_periodo, value_status, value_tipo)
+del(duplicates, error, errors, errors_after_correction, path)
+dir()
 
 # ANALYSE DATA
+
+# 1.a. media de nota dos aprovados NO PERIODO TOTAL
+aprovados_notas = [row['nota'] for row in data_clean_final if row['status'] == 'Aprovado']
+media_total = sum(aprovados_notas) / len(aprovados_notas)
+print(f"Média de nota dos aprovados no período total: {media_total:.2f}")
+
+# 1.b. media de nota dos aprovados POR ANO
+
+
+
+
 
 
 # REPORTS
