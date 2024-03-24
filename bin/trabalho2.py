@@ -51,6 +51,12 @@ import csv
 import re
 dir()
 
+print("UFPR")
+print("Data Science Big Data")
+print("Linguagens de Programação")
+print("Trabalho 1 - Usar Dataset 2")
+print("Vencimento: sábado, 27 abr. 2024, 23:00")
+print("Aluno: Alceu Eilert Nascimento")
 
 #------------------------------------------------------------------------
 # GET DATA
@@ -85,6 +91,17 @@ data
     8. Handle missing values.
 """
 
+print("------------------------------------------------------------------")
+print("------------------------------------------------------------------")
+print("A. Limpado o dataframe do arquivo .CSV (dsbd_trab2_clean0.csv):")       
+print("------------------------------------------------------------------")
+print("------------------------------------------------------------------")
+
+print(f"- Variáveis escolhidas: matricula, período, ano, nota, frequencia, status, tipo.")
+print(f"- Variáveis desconsideradas: código, disciplina, curriculo, ch, obs, natureza, situacaoDiscente, nomeTurma, codigoCuriculoSie.")
+
+
+
 #------------------------------------------------------------------------
 ## Setting a new dataframe clean
 target_variables = [0, 3, 4, 7, 8, 9, 10]  
@@ -100,7 +117,7 @@ with open(path_new, 'w', newline='') as file:
 
 #------------------------------------------------------------------------
 ## Working with the new dataframe cleaned
-print("Analisando e limpado o dataframe clean do .CSV (dsbd_trab2_clean0.csv):")       
+
 
 ### Lista para armazenar as linhas do CSV
 data_clean = []
@@ -128,6 +145,8 @@ value_freq
 value_status = {line['status'] for line in data_clean}
 value_tipo = {linha['tipo'] for linha in data_clean}
 value_tipo
+
+
 
 #------------------------------------------------------------------------
 ### Setting string to integer when applicable
@@ -262,23 +281,12 @@ if duplicates:
     print(f"Duplicates found: {len(duplicates)} rows.")
 else:
     print("There are no duplicates.")
+    print("------------------------------------------------------------------")
 
 
 
 #### Set a new dataframe from 'data_clean_nonOutliers' deleting duplicates
 data_clean_noOutliers_noDuplicates = [row for row in data_clean_noOutliers if row not in duplicates]
-
-
-#------------------------------------------------------------------------
-
-# Print new dataframe cleaned
-headers = list(data_clean_noOutliers_noDuplicates[0].keys())
-col_widths = [max(len(str(item)) for item in (row[col] for row in data_clean_noOutliers_noDuplicates)) for col in headers]
-header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
-print(header_line)
-print("-" * len(header_line))
-for row in data_clean_noOutliers_noDuplicates:
-    print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
 
 
 #------------------------------------------------------------------------
@@ -348,6 +356,19 @@ verificar_e_converter_inteiros(data_clean_noOutliers_noDuplicates)
 
 
 #------------------------------------------------------------------------
+print("------------------------------------------------------------------")
+# Print new dataframe cleaned
+headers = list(data_clean_noOutliers_noDuplicates[0].keys())
+col_widths = [max(len(str(item)) for item in (row[col] for row in data_clean_noOutliers_noDuplicates)) for col in headers]
+header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print(header_line)
+print("-" * len(header_line))
+for row in data_clean_noOutliers_noDuplicates:
+    print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
+
+
+
+#------------------------------------------------------------------------
 ### Save the new dataframe cleand as CSV file
 path_new = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean2.csv'
 headers = data_clean_noOutliers_noDuplicates[0].keys()
@@ -376,7 +397,7 @@ dir()
 
 print("-" * len(header_line))
 print("-" * len(header_line))
-print("Analisando o dataset")
+print("B. Analisando o dataset")
 print("-" * len(header_line))
 print("-" * len(header_line))
 
