@@ -46,7 +46,6 @@ Considere como anos de pandemia os anos de 2020 e 2021.
 import csv
 import re
 
-
 # GET DATA
 
 # Caminho do arquivo CSV
@@ -59,11 +58,10 @@ data = []
 with open(path, 'r', newline='') as file:
     reader = csv.reader(file)
     # Iterar sobre as linhas do CSV e adicioná-las à lista
-    for linha in reader:
-        data.append(linha)
+    for line in reader:
+        data.append(line)
 
-# Imprimir o conteúdo do objeto linhas_csv
-print(data)
+
 
 # CLEAN DATA
 """
@@ -75,23 +73,178 @@ print(data)
     6. Fix errors.
     7. Language translation.
     8. Handle missing values.
-    """
-## New dataframe : 
+"""
 
-colunas_desejadas = [0, 4, 7, 8, 9, 10]  
-data_clean = [[linha[i] for i in colunas_desejadas] for linha in data]
-print(data_clean)
+## Setting a new dataframe cleaned
+target_variables = [0, 4, 7, 8, 9, 10]  
+data_clean = [[line[i] for i in target_variables] for line in data]
 
-# Salvar o novo objeto como um arquivo CSV
-path_novo = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean.csv'
-with open(path_novo, 'w', newline='') as file:
+### Print for better visual
+col_widths = [max(len(str(item)) for item in col) for col in zip(*data_clean)]
+header = data_clean[0]
+header_line = " | ".join(f"{item:{col_widths[i]}}" for i, item in enumerate(header))
+print(header_line)
+print("-" * len(header_line))
+for row in data_clean[1:]:
+    print(" | ".join(f"{str(item):{col_widths[i]}}" for i, item in enumerate(row)))
+
+### Save the new dataframe cleand as CSV file
+path_new = '/home/aenascimento/dsbd_project1/data/dsbd_trab2_clean.csv'
+with open(path_new, 'w', newline='') as file:
     writer = csv.writer(file)
-    # Escrever as linhas no arquivo CSV
-    for linha in data_clean:
-        writer.writerow(linha)
+    for line in data_clean:
+        writer.writerow(line)
+
+
+## Working with the new dataframe cleaned
+       
+### Lista para armazenar as linhas do CSV
+data_clean = []
+
+### Open CSV (use Dic.Reader to dictionary output)
+with open(path_new, 'r', newline='') as file:
+    reader = csv.DictReader(file)
+    for line in reader:
+        data_clean.append(line)
+data_clean
+data_clean[0]
+
+### checar os valores das variaveis
+value_matricula = {line['matricula'] for line in data_clean}
+value_matricula
+value_ano = {line['ano'] for line in data_clean}
+value_ano
+value_nota = {line['nota'] for line in data_clean}
+value_nota
+value_freq = {line['frequencia'] for line in data_clean}
+value_freq
+value_status = {line['status'] for line in data_clean}
+value_tipo = {linha['tipo'] for linha in data_clean}
+value_tipo
+
+
+### Setting string to integer when applicable
+
+#### functions to check if value in a integer and to iterate transformation to integer
+def is_convertible_to_int(value):
+    try:
+        int(value)
+        return True
+    except ValueError:
+        return False
+
+def verificar_e_converter_inteiros(data_clean):
+    for col_name in data_clean[0].keys():  # Assumindo que todas as linhas têm as mesmas chaves
+        # Verificar se algum valor na coluna NÃO é convertível para int
+        if not all(is_convertible_to_int(line[col_name]) for line in data_clean):
+            print(f"Não foi possível converter todos os valores na coluna '{col_name}' para inteiros.")
+        else:
+            # Se todos os valores forem convertíveis, realizar a conversão
+            for line in data_clean:
+                line[col_name] = int(line[col_name])
+            print(f"Todos os valores na coluna '{col_name}' foram convertidos para inteiros.")
+
+#### Iterate transformation
+verificar_e_converter_inteiros(data_clean)
+
+
+
+### Find missing values 
+
+def check_missing_values(data_clean):
+    columns_with_missing = set()  # Set to store the names of columns with missing values
+
+    for line in data_clean:
+        for key, value in line.items():
+            if value == '' or value is None:  # Add more conditions as needed
+                columns_with_missing.add(key)
+    
+    if not columns_with_missing:
+        print("There are no missing values.")
+    else:
+        print("There are missing values in the following columns:", columns_with_missing)
+
+check_missing_values(data_clean)
+
+
+### Removing outliers
+
+#### removing data of 'tipo' de 'EQUIVALENCIA' (zero and non zero)
+#### (assuming the non zero is an error)
+
+##### list of zero grades
+notas_zero_equivalencia = []
+for row in data_clean:
+    if row['tipo'] == 'EQUIVALENCIA' and int(row['nota']) == 0:
+        notas_zero_equivalencia.append(row)
+
+headers = list(notas_zero_equivalencia[0].keys())
+col_widths = [max(len(str(item)) for item in (row[col] for row in notas_zero_equivalencia)) for col in headers]
+header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print(header_line)
+print("-" * len(header_line))
+for row in notas_zero_equivalencia:
+    print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
+
+
+##### list of non zero grades
+notas_nonzero_equivalencia = []
+for row in data_clean:
+    if row['tipo'] == 'EQUIVALENCIA' and int(row['nota']) != 0:
+        notas_nonzero_equivalencia.append(row)
+
+headers = list(notas_nonzero_equivalencia[0].keys())
+col_widths = [max(len(str(item)) for item in (row[col] for row in notas_nonzero_equivalencia)) for col in headers]
+header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print(header_line)
+print("-" * len(header_line))
+for row in notas_nonzero_equivalencia:
+    print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
+
+
+
+#### removing data of 'tipo' de 'APROVEITAMENTO'
+notas_aproveitamento = []
+for row in data_clean:
+    if row['tipo'] == 'APROVEITAMENTO':
+        notas_aproveitamento.append(row)
+
+headers = list(notas_aproveitamento[0].keys())
+col_widths = [max(len(str(item)) for item in (row[col] for row in notas_aproveitamento)) for col in headers]
+header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print(header_line)
+print("-" * len(header_line))
+for row in notas_aproveitamento:
+    print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
+
+
+
+
+#### Combine list to remove from dataframe
+outliers = notas_zero_equivalencia + notas_nonzero_equivalencia + notas_aproveitamento
+
+# Crie uma nova lista de 'data_clean' excluindo as linhas que estão em 'linhas_para_remover'
+data_clean_noOutliers = [row for row in data_clean if row not in outliers]
+
+# Print new dataframe cleaned
+headers = list(data_clean_noOutliers[0].keys())
+col_widths = [max(len(str(item)) for item in (row[col] for row in data_clean_noOutliers)) for col in headers]
+header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print(header_line)
+print("-" * len(header_line))
+for row in data_clean_noOutliers:
+    print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
+
+
+
+
+
+### Removing duplicates
+
 
 
 # ANALYSE DATA
 
 
 # REPORTS
+
