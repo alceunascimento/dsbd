@@ -53,6 +53,9 @@ Analise o dataset do referido arquivo para responder as seguintes perguntas:
 considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? 
 Considere como anos de pandemia os anos de 2020 e 2021.
 
+Nos anos de pandemia é possível ver que o rendimento dos aprovados teve uma [subiu, desceu?]
+As taxas de cancelamento tiveram
+
 
 
 

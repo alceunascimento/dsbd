@@ -373,11 +373,150 @@ aprovados_notas = [row['nota'] for row in data_clean_final if row['status'] == '
 media_total = sum(aprovados_notas) / len(aprovados_notas)
 print(f"Média de nota dos aprovados no período total: {media_total:.2f}")
 
+# 1.a.1 Média de nota dos aprovados NO PERÍODO TOTAL, excluindo os anos de 2020 e 2021
+aprovados_notas_excluindo_anos = [row['nota'] for row in data_clean_final if row['status'] == 'Aprovado' and row['ano'] not in [2020, 2021]]
+if aprovados_notas_excluindo_anos:
+    media_total_excluindo_anos = sum(aprovados_notas_excluindo_anos) / len(aprovados_notas_excluindo_anos)
+    print(f"Média de nota dos aprovados no período total, excluindo 2020 e 2021: {media_total_excluindo_anos:.2f}")
+else:
+    print("Não há notas de aprovados para calcular a média, excluindo 2020 e 2021.")
+
+# 1.a.2 Média de nota dos aprovados NO PERÍODO TOTAL dos anos de 2020 e 2021
+# Média de nota dos aprovados SOMENTE para os anos de 2020 e 2021
+aprovados_notas_2020_2021 = [row['nota'] for row in data_clean_final if row['status'] == 'Aprovado' and row['ano'] in [2020, 2021]]
+
+if aprovados_notas_2020_2021:
+    media_2020_2021 = sum(aprovados_notas_2020_2021) / len(aprovados_notas_2020_2021)
+    print(f"Média de nota dos aprovados somente em 2020 e 2021: {media_2020_2021:.2f}")
+else:
+    print("Não há notas de aprovados para calcular a média em 2020 e 2021.")
+
+
+variacao_rendimento_pandemia = ((media_2020_2021 / media_total_excluindo_anos) - 1) *100
+variacao_rendimento_pandemia
+
 # 1.b. media de nota dos aprovados POR ANO
+grades_by_year = {}
+for row in data_clean_final:
+    if row['status'] == 'Aprovado':
+        year = row['ano']
+        grade = float(row['nota'])  # Ensuring grade is a number for calculation
+        if year not in grades_by_year:
+            grades_by_year[year] = []
+        grades_by_year[year].append(grade)
+
+# Calculating and printing the average grades by year
+for year in sorted(grades_by_year.keys(), key=int):
+    grades = grades_by_year[year]
+    average_grade = sum(grades) / len(grades) if grades else 0
+    print(f"Média de nota dos aprovados em {year}: {average_grade:.2f}")
 
 
 
 
+# 2. Qual é a média de nota dos reprovados por nota (período total e ano)?
+
+# 2.a. média do periodo total
+reprovados_notas = [float(row['nota']) for row in data_clean_final if row['status'] == 'R-nota']
+media_total_reprovados = sum(reprovados_notas) / len(reprovados_notas) if reprovados_notas else 0
+print(f"Média de nota dos reprovados por nota no período total: {media_total_reprovados:.2f}")
+
+# 2.b. média por anos
+grades_by_year_reprovados = {}
+for row in data_clean_final:
+    if row['status'] == 'R-nota':
+        year = row['ano']
+        grade = float(row['nota'])  # Ensuring grade is a number for calculation
+        if year not in grades_by_year_reprovados:
+            grades_by_year_reprovados[year] = []
+        grades_by_year_reprovados[year].append(grade)
+
+for year in sorted(grades_by_year_reprovados.keys(), key=int):
+    grades = grades_by_year_reprovados[year]
+    average_grade_reprovados = sum(grades) / len(grades) if grades else 0
+    print(f"Média de nota dos reprovados por nota em {year}: {average_grade_reprovados:.2f}")
+
+
+
+
+
+# 3. Qual é a frequência dos reprovados por nota (período total e por ano)?
+# 3.a. frequencia media do periodo
+frequencias_reprovados_nota = [row['frequencia'] for row in data_clean_final if row['status'] == 'R-nota']
+media_frequencia_total = sum(frequencias_reprovados_nota) / len(frequencias_reprovados_nota) if frequencias_reprovados_nota else 0
+print(f"Média de frequência dos reprovados por nota no período total: {media_frequencia_total:.2f}")
+
+frequencias_reprovados_nota
+
+# 3.b. frequencia media por anos
+
+frequencias_por_ano = {}
+
+for row in data_clean_final:
+    if row['status'] == 'R-nota':
+        year = row['ano']
+        frequency = row['frequencia']  # 'frequencia' já é um integer
+        if year not in frequencias_por_ano:
+            frequencias_por_ano[year] = []
+        frequencias_por_ano[year].append(frequency)
+
+for year in sorted(frequencias_por_ano.keys(), key=int):
+    frequencies = frequencias_por_ano[year]
+    average_frequency = sum(frequencies) / len(frequencies) if frequencies else 0
+    print(f"Média de frequência dos reprovados por nota em {year}: {average_frequency:.2f}")
+
+
+
+
+# 4. Qual a porcentagem de evasões (total e anual)?
+
+# 4.a. evasao total
+total_alunos = len(data_clean_final)
+total_cancelados = sum(1 for row in data_clean_final if row['status'] == 'Cancelado')
+taxa_evasao_total = (total_cancelados / total_alunos) * 100
+print(f"Taxa de evasão total: {taxa_evasao_total:.2f}%")
+
+
+# 4.b. evasao por anos
+# Inicializando dicionários para contar alunos e cancelamentos por ano
+alunos_por_ano = {}
+cancelamentos_por_ano = {}
+
+for row in data_clean_final:
+    ano = row['ano']
+    # Contar alunos por ano
+    if ano in alunos_por_ano:
+        alunos_por_ano[ano] += 1
+    else:
+        alunos_por_ano[ano] = 1
+
+    # Contar cancelamentos por ano
+    if row['status'] == 'Cancelado':
+        if ano in cancelamentos_por_ano:
+            cancelamentos_por_ano[ano] += 1
+        else:
+            cancelamentos_por_ano[ano] = 1
+
+# Calculando e imprimindo a taxa de evasão por ano, ordenado pelo ano
+for ano in sorted(alunos_por_ano.keys(), key=int):
+    total_alunos_ano = alunos_por_ano[ano]
+    cancelamentos_ano = cancelamentos_por_ano.get(ano, 0)  # Usando get para evitar KeyError se não houver cancelamentos
+    taxa_evasao_ano = (cancelamentos_ano / total_alunos_ano) * 100
+    print(f"Taxa de evasão em {ano}: {taxa_evasao_ano:.2f}%")
+
+# calculando a média de evsao pre pandemia (de 2011 a 2019)
+media_evasao_prepandemia = 
+
+
+
+# 5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, 
+# considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? 
+# Considere como anos de pandemia os anos de 2020 e 2021.
+
+print(f"5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? Considere como anos de pandemia os anos de 2020 e 2021.\n")
+
+print(f"Nos anos de pandemia é possível ver que o rendimento dos aprovados teve um incremento de ", variacao_rendimento_pandemia, "%.")
+print(f"Já as taxas de evasão, que tinham um histórico de {media_evasao_prepandemia:.2f}, foram para {taxa_evasao_2020:.2f}% em 2020.")
 
 
 # REPORTS
