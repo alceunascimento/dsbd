@@ -90,13 +90,15 @@ data
     7. Language translation.
     8. Handle missing values.
 """
-
+print("\n")
 print("------------------------------------------------------------------")
 print("------------------------------------------------------------------")
 print("A. Limpado o dataframe do arquivo .CSV (dsbd_trab2_clean0.csv):")       
 print("------------------------------------------------------------------")
 print("------------------------------------------------------------------")
+print("\n")
 
+print("Premissas da analise:")
 print(f"- Variáveis escolhidas: matricula, período, ano, nota, frequencia, status, tipo.")
 print(f"- Variáveis desconsideradas: código, disciplina, curriculo, ch, obs, natureza, situacaoDiscente, nomeTurma, codigoCuriculoSie.")
 
@@ -354,7 +356,7 @@ apply_corrections(data_clean_noOutliers_noDuplicates, errors)
 verificar_e_converter_inteiros(data_clean_noOutliers_noDuplicates)
 
 
-
+print("\n")
 #------------------------------------------------------------------------
 print("------------------------------------------------------------------")
 # Print new dataframe cleaned
@@ -394,17 +396,21 @@ dir()
 #------------------------------------------------------------------------
 # ANALYSE DATA
 #------------------------------------------------------------------------
+print("\n")
 
 print("-" * len(header_line))
 print("-" * len(header_line))
 print("B. Analisando o dataset")
 print("-" * len(header_line))
 print("-" * len(header_line))
+print("\n")
 
+
+print("-" * len(header_line))
 print("1. Qual é a média de nota dos aprovados (no período total e por ano)?")
 print("-" * len(header_line))
 
-
+print("\n")
 #------------------------------------------------------------------------
 # 1.a.0 media de nota dos aprovados NO PERIODO TOTAL
 aprovados_notas = [row['nota'] for row in data_clean_final if row['status'] == 'Aprovado']
@@ -478,6 +484,7 @@ else:
 
 
 
+print("\n")
 #------------------------------------------------------------------------
 # 2. Qual é a média de nota dos reprovados por nota (período total e ano)?
 print("-" * len(header_line))
@@ -564,7 +571,7 @@ else:
 
 
 
-
+print("\n")
 #------------------------------------------------------------------------
 # 3. Qual é a frequência dos reprovados por nota (período total e por ano)?
 print("-" * len(header_line))
@@ -572,35 +579,43 @@ print("3. Qual é a frequência dos reprovados por nota (período total e por an
 print("-" * len(header_line))
 
 
+def calcular_frequencia_r_nota(dataframe):
+    frequencia_por_ano = {}
+    total_r_nota = 0
+    total_registros = len(dataframe)
+    alunos_por_ano = {}
 
-# 3.a. frequencia media do periodo
-frequencias_reprovados_nota = [row['frequencia'] for row in data_clean_final if row['status'] == 'R-nota']
-media_frequencia_total = sum(frequencias_reprovados_nota) / len(frequencias_reprovados_nota) if frequencias_reprovados_nota else 0
-print(f"Média de frequência dos reprovados por nota no período total: {media_frequencia_total:.2f}")
+    # Conta o total de registros e 'R-nota' por ano
+    for registro in dataframe:
+        ano = registro['ano']
+        status = registro['status']
+        if ano in alunos_por_ano:
+            alunos_por_ano[ano] += 1
+        else:
+            alunos_por_ano[ano] = 1
 
-frequencias_reprovados_nota
+        if status == 'R-nota':
+            if ano in frequencia_por_ano:
+                frequencia_por_ano[ano] += 1
+            else:
+                frequencia_por_ano[ano] = 1
+            total_r_nota += 1
+
+    frequencia_relativa_total = total_r_nota / total_registros
+    print(f"Total de alunos 'R-nota': {total_r_nota} de {total_registros} alunos (Frequência relativa: {frequencia_relativa_total:.2%})")
+    
+    # Ordena os anos antes de imprimir
+    for ano in sorted(alunos_por_ano.keys(), key=int): 
+        freq = frequencia_por_ano.get(ano, 0)
+        total_alunos_ano = alunos_por_ano[ano]
+        freq_relativa_ano = freq / total_alunos_ano
+        print(f"No ano de {ano}: {freq} de {total_alunos_ano} alunos (Frequência relativa: {freq_relativa_ano:.2%})")
+
+# execute function
+calcular_frequencia_r_nota(data_clean_noOutliers_noDuplicates)
 
 
-
-# 3.b. frequencia media POR ANO
-
-frequencias_por_ano = {}
-
-for row in data_clean_final:
-    if row['status'] == 'R-nota':
-        year = row['ano']
-        frequency = row['frequencia']  # 'frequencia' já é um integer
-        if year not in frequencias_por_ano:
-            frequencias_por_ano[year] = []
-        frequencias_por_ano[year].append(frequency)
-
-for year in sorted(frequencias_por_ano.keys(), key=int):
-    frequencies = frequencias_por_ano[year]
-    average_frequency = sum(frequencies) / len(frequencies) if frequencies else 0
-    print(f"Média de frequência dos reprovados por nota em {year}: {average_frequency:.2f}")
-
-
-
+print("\n")
 #------------------------------------------------------------------------
 # 4. Qual a porcentagem de evasões (total e anual)?
 print("-" * len(header_line))
@@ -668,23 +683,22 @@ for ano in range(2011, 2020):  # Inclui de 2011 até 2019
 media_evasao_prepandemia = soma_taxa_evasao_prepandemia / contagem_anos_prepandemia
 print(f"Média de evasão pré-pandemia (2011-2019): {media_evasao_prepandemia:.2f}%")
 
-
-
+print("\n")
 #------------------------------------------------------------------------
 # 5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, 
 # considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? 
 # Considere como anos de pandemia os anos de 2020 e 2021.
 print("-" * len(header_line))
-print(f"5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? Considere como anos de pandemia os anos de 2020 e 2021.\n")
+print(f"5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? Considere como anos de pandemia os anos de 2020 e 2021.")
 print("-" * len(header_line))
 
 
-
+print("\n")
 print(f"Nos anos de pandemia é possível ver que o rendimento dos aprovados teve um incremento de {variacao_rendimento_pandemia:.2f}%")
 print(f"Já as taxas de evasão, que tinham um histórico de {media_evasao_prepandemia:.2f}%, foram para {taxas_evasao_por_ano[2020]:.2f}% em 2020.")
 print(f"Por fim, com relação as reprovações, observa-se que a média das notas baixou de [media pre pandemia] para [media de 2020] e [media de 2021], mesmo a frequencia tendo subido de [media pre pandemia] para [media de 2020] e [media de 2021] ")
 
-
+print("\n")
 #------------------------------------------------------------------------
 # 6. Compare a volta às aulas híbrida (2022 período 1) com os anos de pandemia e os anos anteriores.
 print("-" * len(header_line))
@@ -694,7 +708,7 @@ print("-" * len(header_line))
 print(f"")
 
 
-
+print("\n")
 #------------------------------------------------------------------------
 # 7. Compare a volta às aulas presencial (2022 período 2) com a volta híbrida do item anterior.
 print("-" * len(header_line))
