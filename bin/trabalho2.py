@@ -155,6 +155,8 @@ def check_missing_values(data_clean):
 check_missing_values(data_clean)
 
 print("\n")
+print("A. III. Outliers")
+print("Notas:\n1: removendo dados do 'tipo' de 'EQUIVALENCIA' (zero and não zero), assumindo que o não zero é erro\n2: removendo dados de 'tipo' de 'APROVEITAMENTO'")
 #------------------------------------------------------------------------
 ### Removing outliers
 #### removing data of 'tipo' de 'EQUIVALENCIA' (zero and non zero)
@@ -241,10 +243,10 @@ for row in data_clean_noOutliers:
 
 # Now duplicates has all duplicates found
 if duplicates:
-    print(f"Duplicates found: {len(duplicates)} rows.")
+    print(f"Duplicados encontrados: {len(duplicates)} linhas.")
 else:
     print("------------------------------------------------------------------")
-    print("There are no duplicates.")
+    print("Não há duplicados.")
     print("------------------------------------------------------------------")
 
 
@@ -292,9 +294,9 @@ errors = check_errors(data_clean_noOutliers_noDuplicates)
 
 if errors:
     for error in errors:
-        print(f"Row {error[0]}: Incorrect status '{error[1]}', expected '{error[2]}'")
+        print(f"Linha {error[0]}: Status incorreto '{error[1]}', esperado '{error[2]}'")
 else:
-    print("No errors found.")
+    print("Não foram encontrados erros.")
 
 
 #### Applying corrections
@@ -312,7 +314,8 @@ apply_corrections(data_clean_noOutliers_noDuplicates, errors)
 
 
 
-
+print("\n")
+print("Nova tentativa de conversão:")
 #------------------------------------------------------------------------
 # (re)setting strings to interger when applicable
 verificar_e_converter_inteiros(data_clean_noOutliers_noDuplicates)
