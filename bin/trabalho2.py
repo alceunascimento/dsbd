@@ -1,62 +1,32 @@
 #------------------------------------------------------------------------
 # UFPR - DSBD : trabalho 2
+# Escopo: importa, limpar e analisar um dataset
 #------------------------------------------------------------------------
 """
-UFPR
-Data Science Big Data
-Linguagens de Programação
-
-Trabalho 1 - Usar Dataset 2
-
-Aberto: sábado, 23 mar. 2024, 00:00
-Vencimento: sábado, 27 abr. 2024, 23:00
-
-Vamos obter informações sobre o rendimento de alunos de um curso em algumas disciplinas ao longo dos anos.
-
+Informações sobre o rendimento de alunos de um curso em algumas disciplinas ao longo dos anos.
 O primeiro arquivo contido no Dataset Notas, historico-alg1_SIGA_ANONIMIZADO.csv, refere-se ao aproveitamento 
 de estudantes na disciplina ALGORITMOS 1 entre os anos de 2011 e 2022.
-
 A primeira coluna ("matricula") é composta por números inteiros, onde cada número representa um indivíduo. 
 Assim, repetições nessa coluna indicam que o estudante fez mais de uma vez a mesma matéria.
-
 Atenção: R-nota indica REPROVAÇÃO POR NOTA e R-freq REPROVAÇÃO POR FALTA. 
 Se houver outro "status" para representar reprovação, este dever ser trocado para o rótulo adequado (R-nota ou R-freq). 
 Frequências < 75 causam reprovação por falta; Médias abaixo de 50 causam reprovação por nota.
-
-Analise o dataset do referido arquivo para responder as seguintes perguntas:
-
-1. Qual é a média de nota dos aprovados (no período total e por ano)?
-
-2. Qual é a média de nota dos reprovados por nota (período total e ano)?
-
-3. Qual é a frequência dos reprovados por nota (período total e por ano)?
-
-4. Qual a porcentagem de evasões (total e anual)?
-
-5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, 
-considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? 
-Considere como anos de pandemia os anos de 2020 e 2021.
-
-6. Compare a volta às aulas híbrida (2022 período 1) com os anos de pandemia e os anos anteriores.
-
-7. Compare a volta às aulas presencial (2022 período 2) com a volta híbrida do item anterior.
-
 """
-
-#------------------------------------------------------------------------
-# SETUP 
-#------------------------------------------------------------------------
-
-import csv
-import re
-dir()
-
 print("UFPR")
 print("Data Science Big Data")
 print("Linguagens de Programação")
 print("Trabalho 1 - Usar Dataset 2")
 print("Vencimento: sábado, 27 abr. 2024, 23:00")
 print("Aluno: Alceu Eilert Nascimento")
+
+
+#------------------------------------------------------------------------
+# SETUP 
+#------------------------------------------------------------------------
+import csv
+import re
+dir()
+
 
 #------------------------------------------------------------------------
 # GET DATA
@@ -81,25 +51,23 @@ data
 # CLEAN DATA
 #------------------------------------------------------------------------
 """
-    1. Remove duplicates.
-    2. Remove irrelevant data.
-    3. Standardize capitalization.
-    4. Convert data type.
-    5. Clear formatting.
-    6. Fix errors.
-    7. Language translation.
-    8. Handle missing values.
+Remove irrelevant data.
+Convert data type.
+Remove duplicates.
+Clear formatting.
+Fix errors.
+Handle missing values.
 """
-
+print("\n")
 print("------------------------------------------------------------------")
 print("------------------------------------------------------------------")
 print("A. Limpado o dataframe do arquivo .CSV (dsbd_trab2_clean0.csv):")       
 print("------------------------------------------------------------------")
 print("------------------------------------------------------------------")
-
+print("\n")
+print("A. I. Premissas da analise:")
 print(f"- Variáveis escolhidas: matricula, período, ano, nota, frequencia, status, tipo.")
 print(f"- Variáveis desconsideradas: código, disciplina, curriculo, ch, obs, natureza, situacaoDiscente, nomeTurma, codigoCuriculoSie.")
-
 
 
 #------------------------------------------------------------------------
@@ -115,11 +83,10 @@ with open(path_new, 'w', newline='') as file:
         writer.writerow(line)
 
 
+print("\n")
+print("A. II. Relatório de limpeza:")
 #------------------------------------------------------------------------
 ## Working with the new dataframe cleaned
-
-
-### Lista para armazenar as linhas do CSV
 data_clean = []
 data_clean
 
@@ -131,7 +98,7 @@ with open(path_new, 'r', newline='') as file:
 data_clean
 data_clean[0]
 
-### checar os valores das variaveis
+### checking variables
 value_matricula = {line['matricula'] for line in data_clean}
 value_matricula
 value_periodo = {line['periodo'] for line in data_clean}
@@ -147,11 +114,8 @@ value_tipo = {linha['tipo'] for linha in data_clean}
 value_tipo
 
 
-
 #------------------------------------------------------------------------
 ### Setting string to integer when applicable
-
-#### functions to check if value in a integer and to iterate transformation to integer
 def is_convertible_to_int(value):
     try:
         int(value)
@@ -160,7 +124,7 @@ def is_convertible_to_int(value):
         return False
 
 def verificar_e_converter_inteiros(data_clean):
-    for col_name in data_clean[0].keys():  # Assumindo que todas as linhas têm as mesmas chaves
+    for col_name in data_clean[0].keys():
         # Verificar se algum valor na coluna NÃO é convertível para int
         if not all(is_convertible_to_int(line[col_name]) for line in data_clean):
             print(f"Não foi possível converter todos os valores na coluna '{col_name}' para inteiros.")
@@ -170,13 +134,11 @@ def verificar_e_converter_inteiros(data_clean):
                 line[col_name] = int(line[col_name])
             print(f"Todos os valores na coluna '{col_name}' foram convertidos para inteiros.")
 
-#### Iterate transformation
 verificar_e_converter_inteiros(data_clean)
 
 
 #------------------------------------------------------------------------
 ### Find missing values 
-
 def check_missing_values(data_clean):
     columns_with_missing = set()  # Set to store the names of columns with missing values
 
@@ -186,32 +148,34 @@ def check_missing_values(data_clean):
                 columns_with_missing.add(key)
     
     if not columns_with_missing:
-        print("There are no missing values.")
+        print("Não há valores vazios.")
     else:
-        print("There are missing values in the following columns:", columns_with_missing)
+        print("Existem valores vazios nas seguintes colunas:", columns_with_missing)
 
 check_missing_values(data_clean)
 
+print("\n")
+print("A. III. Outliers")
+print("Notas:\n1: removendo dados do 'tipo' de 'EQUIVALENCIA' (zero and não zero), assumindo que o não zero é erro\n2: removendo dados de 'tipo' de 'APROVEITAMENTO'")
 #------------------------------------------------------------------------
 ### Removing outliers
 #### removing data of 'tipo' de 'EQUIVALENCIA' (zero and non zero)
 #### (assuming the non zero is an error)
 
-##### list of zero grades
 notas_zero_equivalencia = []
 for row in data_clean:
     if row['tipo'] == 'EQUIVALENCIA' and int(row['nota']) == 0:
         notas_zero_equivalencia.append(row)
 
-"""
 headers = list(notas_zero_equivalencia[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in notas_zero_equivalencia)) for col in headers]
 header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print("-" * len(header_line))
 print(header_line)
 print("-" * len(header_line))
 for row in notas_zero_equivalencia:
     print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
-"""
+
 
 ##### list of non zero grades
 notas_nonzero_equivalencia = []
@@ -219,15 +183,15 @@ for row in data_clean:
     if row['tipo'] == 'EQUIVALENCIA' and int(row['nota']) != 0:
         notas_nonzero_equivalencia.append(row)
 
-"""
+
 headers = list(notas_nonzero_equivalencia[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in notas_nonzero_equivalencia)) for col in headers]
 header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print("-" * len(header_line))
 print(header_line)
 print("-" * len(header_line))
 for row in notas_nonzero_equivalencia:
     print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
-"""
 
 
 #### removing data of 'tipo' de 'APROVEITAMENTO'
@@ -236,15 +200,16 @@ for row in data_clean:
     if row['tipo'] == 'APROVEITAMENTO':
         notas_aproveitamento.append(row)
 
-"""
+
 headers = list(notas_aproveitamento[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in notas_aproveitamento)) for col in headers]
 header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print("-" * len(header_line))
 print(header_line)
 print("-" * len(header_line))
 for row in notas_aproveitamento:
     print(" | ".join(f"{str(row[col]):{col_widths[i]}}" for i, col in enumerate(headers)))
-"""
+
 
 #### Combine list to remove from dataframe
 outliers = notas_zero_equivalencia + notas_nonzero_equivalencia + notas_aproveitamento
@@ -254,7 +219,7 @@ outliers = notas_zero_equivalencia + notas_nonzero_equivalencia + notas_aproveit
 data_clean_noOutliers = [row for row in data_clean if row not in outliers]
 
 
-
+print("\n")
 #------------------------------------------------------------------------
 ### Removing duplicates
 
@@ -278,9 +243,10 @@ for row in data_clean_noOutliers:
 
 # Now duplicates has all duplicates found
 if duplicates:
-    print(f"Duplicates found: {len(duplicates)} rows.")
+    print(f"Duplicados encontrados: {len(duplicates)} linhas.")
 else:
-    print("There are no duplicates.")
+    print("------------------------------------------------------------------")
+    print("Não há duplicados.")
     print("------------------------------------------------------------------")
 
 
@@ -300,7 +266,7 @@ with open(path_new, 'w', newline='') as file:
         writer.writerow(line)
 
 
-
+print("\n")
 #------------------------------------------------------------------------
 ### Uniforming 'status' 
 #### Assuming that 'Matriculado' deveria ser 'R-nota' ou 'R-freq'
@@ -328,9 +294,9 @@ errors = check_errors(data_clean_noOutliers_noDuplicates)
 
 if errors:
     for error in errors:
-        print(f"Row {error[0]}: Incorrect status '{error[1]}', expected '{error[2]}'")
+        print(f"Linha {error[0]}: Status incorreto '{error[1]}', esperado '{error[2]}'")
 else:
-    print("No errors found.")
+    print("Não foram encontrados erros.")
 
 
 #### Applying corrections
@@ -348,19 +314,21 @@ apply_corrections(data_clean_noOutliers_noDuplicates, errors)
 
 
 
-
+print("\n")
+print("Nova tentativa de conversão:")
 #------------------------------------------------------------------------
 # (re)setting strings to interger when applicable
 verificar_e_converter_inteiros(data_clean_noOutliers_noDuplicates)
 
 
-
+print("\n")
 #------------------------------------------------------------------------
-print("------------------------------------------------------------------")
+print("Dataframe limpo")
 # Print new dataframe cleaned
 headers = list(data_clean_noOutliers_noDuplicates[0].keys())
 col_widths = [max(len(str(item)) for item in (row[col] for row in data_clean_noOutliers_noDuplicates)) for col in headers]
 header_line = " | ".join(f"{header:{col_widths[i]}}" for i, header in enumerate(headers))
+print("-" * len(header_line))
 print(header_line)
 print("-" * len(header_line))
 for row in data_clean_noOutliers_noDuplicates:
@@ -394,17 +362,19 @@ dir()
 #------------------------------------------------------------------------
 # ANALYSE DATA
 #------------------------------------------------------------------------
+print("\n")
 
 print("-" * len(header_line))
 print("-" * len(header_line))
 print("B. Analisando o dataset")
 print("-" * len(header_line))
 print("-" * len(header_line))
+print("\n")
 
+
+print("-" * len(header_line))
 print("1. Qual é a média de nota dos aprovados (no período total e por ano)?")
 print("-" * len(header_line))
-
-
 #------------------------------------------------------------------------
 # 1.a.0 media de nota dos aprovados NO PERIODO TOTAL
 aprovados_notas = [row['nota'] for row in data_clean_final if row['status'] == 'Aprovado']
@@ -478,6 +448,7 @@ else:
 
 
 
+print("\n")
 #------------------------------------------------------------------------
 # 2. Qual é a média de nota dos reprovados por nota (período total e ano)?
 print("-" * len(header_line))
@@ -564,7 +535,7 @@ else:
 
 
 
-
+print("\n")
 #------------------------------------------------------------------------
 # 3. Qual é a frequência dos reprovados por nota (período total e por ano)?
 print("-" * len(header_line))
@@ -572,35 +543,43 @@ print("3. Qual é a frequência dos reprovados por nota (período total e por an
 print("-" * len(header_line))
 
 
+def calcular_frequencia_r_nota(dataframe):
+    frequencia_por_ano = {}
+    total_r_nota = 0
+    total_registros = len(dataframe)
+    alunos_por_ano = {}
 
-# 3.a. frequencia media do periodo
-frequencias_reprovados_nota = [row['frequencia'] for row in data_clean_final if row['status'] == 'R-nota']
-media_frequencia_total = sum(frequencias_reprovados_nota) / len(frequencias_reprovados_nota) if frequencias_reprovados_nota else 0
-print(f"Média de frequência dos reprovados por nota no período total: {media_frequencia_total:.2f}")
+    # Conta o total de registros e 'R-nota' por ano
+    for registro in dataframe:
+        ano = registro['ano']
+        status = registro['status']
+        if ano in alunos_por_ano:
+            alunos_por_ano[ano] += 1
+        else:
+            alunos_por_ano[ano] = 1
 
-frequencias_reprovados_nota
+        if status == 'R-nota':
+            if ano in frequencia_por_ano:
+                frequencia_por_ano[ano] += 1
+            else:
+                frequencia_por_ano[ano] = 1
+            total_r_nota += 1
+
+    frequencia_relativa_total = total_r_nota / total_registros
+    print(f"Total de alunos 'R-nota': {total_r_nota} de {total_registros} alunos (Frequência relativa: {frequencia_relativa_total:.2%})")
+    
+    # Ordena os anos antes de imprimir
+    for ano in sorted(alunos_por_ano.keys(), key=int): 
+        freq = frequencia_por_ano.get(ano, 0)
+        total_alunos_ano = alunos_por_ano[ano]
+        freq_relativa_ano = freq / total_alunos_ano
+        print(f"No ano de {ano}: {freq} de {total_alunos_ano} alunos (Frequência relativa: {freq_relativa_ano:.2%})")
+
+# execute function
+calcular_frequencia_r_nota(data_clean_noOutliers_noDuplicates)
 
 
-
-# 3.b. frequencia media POR ANO
-
-frequencias_por_ano = {}
-
-for row in data_clean_final:
-    if row['status'] == 'R-nota':
-        year = row['ano']
-        frequency = row['frequencia']  # 'frequencia' já é um integer
-        if year not in frequencias_por_ano:
-            frequencias_por_ano[year] = []
-        frequencias_por_ano[year].append(frequency)
-
-for year in sorted(frequencias_por_ano.keys(), key=int):
-    frequencies = frequencias_por_ano[year]
-    average_frequency = sum(frequencies) / len(frequencies) if frequencies else 0
-    print(f"Média de frequência dos reprovados por nota em {year}: {average_frequency:.2f}")
-
-
-
+print("\n")
 #------------------------------------------------------------------------
 # 4. Qual a porcentagem de evasões (total e anual)?
 print("-" * len(header_line))
@@ -668,23 +647,21 @@ for ano in range(2011, 2020):  # Inclui de 2011 até 2019
 media_evasao_prepandemia = soma_taxa_evasao_prepandemia / contagem_anos_prepandemia
 print(f"Média de evasão pré-pandemia (2011-2019): {media_evasao_prepandemia:.2f}%")
 
-
-
+print("\n")
 #------------------------------------------------------------------------
 # 5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, 
 # considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? 
 # Considere como anos de pandemia os anos de 2020 e 2021.
 print("-" * len(header_line))
-print(f"5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? Considere como anos de pandemia os anos de 2020 e 2021.\n")
+print(f"5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? Considere como anos de pandemia os anos de 2020 e 2021.")
 print("-" * len(header_line))
-
 
 
 print(f"Nos anos de pandemia é possível ver que o rendimento dos aprovados teve um incremento de {variacao_rendimento_pandemia:.2f}%")
 print(f"Já as taxas de evasão, que tinham um histórico de {media_evasao_prepandemia:.2f}%, foram para {taxas_evasao_por_ano[2020]:.2f}% em 2020.")
 print(f"Por fim, com relação as reprovações, observa-se que a média das notas baixou de [media pre pandemia] para [media de 2020] e [media de 2021], mesmo a frequencia tendo subido de [media pre pandemia] para [media de 2020] e [media de 2021] ")
 
-
+print("\n")
 #------------------------------------------------------------------------
 # 6. Compare a volta às aulas híbrida (2022 período 1) com os anos de pandemia e os anos anteriores.
 print("-" * len(header_line))
@@ -694,7 +671,7 @@ print("-" * len(header_line))
 print(f"")
 
 
-
+print("\n")
 #------------------------------------------------------------------------
 # 7. Compare a volta às aulas presencial (2022 período 2) com a volta híbrida do item anterior.
 print("-" * len(header_line))

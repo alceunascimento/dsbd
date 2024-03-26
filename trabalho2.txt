@@ -4,13 +4,21 @@ Linguagens de Programação
 Trabalho 1 - Usar Dataset 2
 Vencimento: sábado, 27 abr. 2024, 23:00
 Aluno: Alceu Eilert Nascimento
+
+
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 A. Limpado o dataframe do arquivo .CSV (dsbd_trab2_clean0.csv):
 ------------------------------------------------------------------
 ------------------------------------------------------------------
+
+
+A. I. Premissas da analise:
 - Variáveis escolhidas: matricula, período, ano, nota, frequencia, status, tipo.
 - Variáveis desconsideradas: código, disciplina, curriculo, ch, obs, natureza, situacaoDiscente, nomeTurma, codigoCuriculoSie.
+
+
+A. II. Relatório de limpeza:
 Todos os valores na coluna 'matricula' foram convertidos para inteiros.
 Não foi possível converter todos os valores na coluna 'periodo' para inteiros.
 Todos os valores na coluna 'ano' foram convertidos para inteiros.
@@ -18,82 +26,249 @@ Todos os valores na coluna 'nota' foram convertidos para inteiros.
 Todos os valores na coluna 'frequencia' foram convertidos para inteiros.
 Não foi possível converter todos os valores na coluna 'status' para inteiros.
 Não foi possível converter todos os valores na coluna 'tipo' para inteiros.
-There are no missing values.
-There are no duplicates.
+Não há valores vazios.
+
+
+A. III. Outliers
+Notas:
+1: removendo dados do 'tipo' de 'EQUIVALENCIA' (zero and não zero), assumindo que o não zero é erro
+2: removendo dados de 'tipo' de 'APROVEITAMENTO'
+------------------------------------------------------------------------
+matricula | periodo | ano  | nota | frequencia | status   | tipo        
+------------------------------------------------------------------------
+5   | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+6   | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+7   | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+13  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+14  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+19  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+30  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+34  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+42  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+51  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+53  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+57  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+61  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+64  | 2 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+68  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+80  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+81  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+91  | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+101 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+103 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+124 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+126 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+127 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+130 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+139 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+140 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+141 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+143 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+149 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+150 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+152 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+155 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+162 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+166 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+169 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+170 | 1 | 2018 | 0 | 0 | Aprovado | EQUIVALENCIA
+179 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+187 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+190 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+192 | 1 | 2017 | 0 | 0 | Aprovado | EQUIVALENCIA
+192 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+198 | 1 | 2018 | 0 | 0 | Aprovado | EQUIVALENCIA
+213 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+214 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+216 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+224 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+225 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+226 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+237 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+239 | 1 | 2018 | 0 | 0 | Aprovado | EQUIVALENCIA
+239 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+240 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+242 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+243 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+248 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+250 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+252 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+257 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+261 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+262 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+266 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+282 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+284 | 1 | 2018 | 0 | 0 | Aprovado | EQUIVALENCIA
+285 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+288 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+290 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+292 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+294 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+296 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+298 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+301 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+303 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+309 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+313 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+316 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+319 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+322 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+323 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+331 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+339 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+340 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+341 | 1 | 2015 | 0 | 0 | Aprovado | EQUIVALENCIA
+353 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+357 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+363 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+367 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+374 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+376 | 1 | 2016 | 0 | 0 | Aprovado | EQUIVALENCIA
+379 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+386 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+387 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+389 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+390 | 1 | 2017 | 0 | 0 | Aprovado | EQUIVALENCIA
+390 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+391 | 1 | 2016 | 0 | 0 | Aprovado | EQUIVALENCIA
+400 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+406 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+413 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+427 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+428 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+432 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+437 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+444 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+445 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+446 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+449 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+463 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+465 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+469 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+474 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+480 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+482 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+484 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+489 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+491 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+495 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+497 | 1 | 2016 | 0 | 0 | Aprovado | EQUIVALENCIA
+502 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+512 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+513 | 1 | 2022 | 0 | 0 | Aprovado | EQUIVALENCIA
+516 | 1 | 2017 | 0 | 0 | Aprovado | EQUIVALENCIA
+527 | 1 | 2020 | 0 | 0 | Aprovado | EQUIVALENCIA
+530 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+531 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+532 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+536 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+537 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+543 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+544 | 1 | 2018 | 0 | 0 | Aprovado | EQUIVALENCIA
+547 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+552 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+553 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+554 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+555 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+558 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+561 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+562 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+565 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+566 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+569 | 1 | 2015 | 0 | 0 | Aprovado | EQUIVALENCIA
+571 | 1 | 2019 | 0 | 0 | Aprovado | EQUIVALENCIA
+------------------------------------------------------------------------
+matricula | periodo | ano  | nota | frequencia | status   | tipo        
+------------------------------------------------------------------------
+28 | 1 | 2014 | 81 | 0 | Aprovado | EQUIVALENCIA
+87 | 1 | 2013 | 54 | 0 | Aprovado | EQUIVALENCIA
+---------------------------------------------------------------------------
+matricula | periodo | ano  | nota | frequencia | status    | tipo          
+---------------------------------------------------------------------------
+95 | Anual | 2019 | 5 | 0 | Reprovado | APROVEITAMENTO
+
+
 ------------------------------------------------------------------
-Row 3: Incorrect status 'Cancelado', expected 'R-freq'
-Row 4: Incorrect status 'Cancelado', expected 'R-freq'
-Row 8: Incorrect status 'Matriculado', expected 'R-freq'
-Row 11: Incorrect status 'Cancelado', expected 'R-freq'
-Row 12: Incorrect status 'Matriculado', expected 'R-freq'
-Row 22: Incorrect status 'Cancelado', expected 'R-freq'
-Row 23: Incorrect status 'Cancelado', expected 'R-freq'
-Row 33: Incorrect status 'Cancelado', expected 'R-nota'
-Row 56: Incorrect status 'Cancelado', expected 'R-freq'
-Row 57: Incorrect status 'Cancelado', expected 'R-freq'
-Row 61: Incorrect status 'Matriculado', expected 'R-freq'
-Row 64: Incorrect status 'Matriculado', expected 'R-freq'
-Row 93: Incorrect status 'Matriculado', expected 'R-freq'
-Row 109: Incorrect status 'Matriculado', expected 'R-nota'
-Row 110: Incorrect status 'Cancelado', expected 'R-nota'
-Row 113: Incorrect status 'Cancelado', expected 'R-freq'
-Row 119: Incorrect status 'Matriculado', expected 'R-freq'
-Row 131: Incorrect status 'Matriculado', expected 'R-freq'
-Row 145: Incorrect status 'Cancelado', expected 'R-freq'
-Row 148: Incorrect status 'Matriculado', expected 'R-freq'
-Row 150: Incorrect status 'Matriculado', expected 'R-freq'
-Row 156: Incorrect status 'Matriculado', expected 'R-freq'
-Row 164: Incorrect status 'Cancelado', expected 'R-freq'
-Row 194: Incorrect status 'Matriculado', expected 'R-freq'
-Row 204: Incorrect status 'Matriculado', expected 'R-nota'
-Row 246: Incorrect status 'Matriculado', expected 'R-freq'
-Row 256: Incorrect status 'Matriculado', expected 'R-freq'
-Row 272: Incorrect status 'Matriculado', expected 'R-freq'
-Row 288: Incorrect status 'Cancelado', expected 'R-freq'
-Row 293: Incorrect status 'Matriculado', expected 'R-nota'
-Row 311: Incorrect status 'Cancelado', expected 'R-nota'
-Row 327: Incorrect status 'Matriculado', expected 'R-freq'
-Row 337: Incorrect status 'Cancelado', expected 'R-freq'
-Row 366: Incorrect status 'Cancelado', expected 'R-freq'
-Row 368: Incorrect status 'Cancelado', expected 'R-freq'
-Row 370: Incorrect status 'Cancelado', expected 'R-freq'
-Row 373: Incorrect status 'Matriculado', expected 'R-freq'
-Row 374: Incorrect status 'Cancelado', expected 'R-nota'
-Row 381: Incorrect status 'Cancelado', expected 'R-nota'
-Row 411: Incorrect status 'Cancelado', expected 'R-freq'
-Row 416: Incorrect status 'Matriculado', expected 'R-freq'
-Row 434: Incorrect status 'Cancelado', expected 'R-freq'
-Row 451: Incorrect status 'Matriculado', expected 'R-freq'
-Row 453: Incorrect status 'Matriculado', expected 'R-freq'
-Row 458: Incorrect status 'Cancelado', expected 'R-freq'
-Row 461: Incorrect status 'Matriculado', expected 'R-freq'
-Row 482: Incorrect status 'Cancelado', expected 'R-freq'
-Row 484: Incorrect status 'Cancelado', expected 'R-freq'
-Row 504: Incorrect status 'Cancelado', expected 'R-freq'
-Row 545: Incorrect status 'Matriculado', expected 'R-freq'
-Row 549: Incorrect status 'Matriculado', expected 'R-freq'
-Row 562: Incorrect status 'Cancelado', expected 'R-freq'
-Row 563: Incorrect status 'Matriculado', expected 'R-freq'
-Row 572: Incorrect status 'Cancelado', expected 'R-freq'
-Row 587: Incorrect status 'Matriculado', expected 'R-nota'
-Row 588: Incorrect status 'Cancelado', expected 'R-freq'
-Row 601: Incorrect status 'Matriculado', expected 'R-freq'
-Row 604: Incorrect status 'Matriculado', expected 'R-freq'
-Row 656: Incorrect status 'Matriculado', expected 'R-freq'
-Row 664: Incorrect status 'Cancelado', expected 'R-freq'
-Row 667: Incorrect status 'Cancelado', expected 'R-freq'
-Row 668: Incorrect status 'Cancelado', expected 'R-freq'
-Row 669: Incorrect status 'Matriculado', expected 'R-freq'
-Row 692: Incorrect status 'Matriculado', expected 'R-freq'
-Row 699: Incorrect status 'Cancelado', expected 'R-freq'
-Row 702: Incorrect status 'Matriculado', expected 'R-freq'
-Row 703: Incorrect status 'Cancelado', expected 'R-freq'
-Row 707: Incorrect status 'Matriculado', expected 'R-freq'
-Row 720: Incorrect status 'Matriculado', expected 'R-freq'
-Row 722: Incorrect status 'Cancelado', expected 'R-freq'
-Row 725: Incorrect status 'Matriculado', expected 'R-freq'
-Row 736: Incorrect status 'Cancelado', expected 'R-freq'
-Row 760: Incorrect status 'Cancelado', expected 'R-freq'
+Não há duplicados.
+------------------------------------------------------------------
+
+
+Linha 3: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 4: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 8: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 11: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 12: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 22: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 23: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 33: Status incorreto 'Cancelado', esperado 'R-nota'
+Linha 56: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 57: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 61: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 64: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 93: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 109: Status incorreto 'Matriculado', esperado 'R-nota'
+Linha 110: Status incorreto 'Cancelado', esperado 'R-nota'
+Linha 113: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 119: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 131: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 145: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 148: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 150: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 156: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 164: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 194: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 204: Status incorreto 'Matriculado', esperado 'R-nota'
+Linha 246: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 256: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 272: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 288: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 293: Status incorreto 'Matriculado', esperado 'R-nota'
+Linha 311: Status incorreto 'Cancelado', esperado 'R-nota'
+Linha 327: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 337: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 366: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 368: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 370: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 373: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 374: Status incorreto 'Cancelado', esperado 'R-nota'
+Linha 381: Status incorreto 'Cancelado', esperado 'R-nota'
+Linha 411: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 416: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 434: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 451: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 453: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 458: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 461: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 482: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 484: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 504: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 545: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 549: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 562: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 563: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 572: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 587: Status incorreto 'Matriculado', esperado 'R-nota'
+Linha 588: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 601: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 604: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 656: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 664: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 667: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 668: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 669: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 692: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 699: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 702: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 703: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 707: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 720: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 722: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 725: Status incorreto 'Matriculado', esperado 'R-freq'
+Linha 736: Status incorreto 'Cancelado', esperado 'R-freq'
+Linha 760: Status incorreto 'Cancelado', esperado 'R-freq'
+
+
+Nova tentativa de conversão:
 Todos os valores na coluna 'matricula' foram convertidos para inteiros.
 Todos os valores na coluna 'periodo' foram convertidos para inteiros.
 Todos os valores na coluna 'ano' foram convertidos para inteiros.
@@ -101,6 +276,9 @@ Todos os valores na coluna 'nota' foram convertidos para inteiros.
 Todos os valores na coluna 'frequencia' foram convertidos para inteiros.
 Não foi possível converter todos os valores na coluna 'status' para inteiros.
 Não foi possível converter todos os valores na coluna 'tipo' para inteiros.
+
+
+Dataframe limpo
 ------------------------------------------------------------------
 matricula | periodo | ano  | nota | frequencia | status    | tipo 
 ------------------------------------------------------------------
@@ -869,10 +1047,15 @@ matricula | periodo | ano  | nota | frequencia | status    | tipo
 570 | 1 | 2022 | 70  | 100 | Aprovado  | TURMA
 571 | 1 | 2018 | 98  | 100 | Aprovado  | TURMA
 572 | 1 | 2021 | 83  | 100 | Aprovado  | TURMA
+
+
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 B. Analisando o dataset
 ------------------------------------------------------------------
+------------------------------------------------------------------
+
+
 ------------------------------------------------------------------
 1. Qual é a média de nota dos aprovados (no período total e por ano)?
 ------------------------------------------------------------------
@@ -892,6 +1075,8 @@ Média de nota dos aprovados em 2021: 83.88
 Média de nota dos aprovados em 2022: 77.82
 Média de nota dos aprovados em 2022 - Período 1: 77.82
 Não há notas de aprovados em 2022 - Período 2 para calcular a média.
+
+
 ------------------------------------------------------------------
 2. Qual é a média de nota dos reprovados por nota (período total e ano)?
 ------------------------------------------------------------------
@@ -911,21 +1096,26 @@ Média de nota dos reprovados por nota em 2021: 19.59
 Média de nota dos reprovados por nota em 2022: 19.78
 Média de nota dos reprovados em 2022 - Período 1: 19.78
 Não há notas de reprovados em 2022 - Período 2 para calcular a média.
+
+
 ------------------------------------------------------------------
 3. Qual é a frequência dos reprovados por nota (período total e por ano)?
 ------------------------------------------------------------------
-Média de frequência dos reprovados por nota no período total: 94.01
-Média de frequência dos reprovados por nota em 2012: 98.00
-Média de frequência dos reprovados por nota em 2013: 100.00
-Média de frequência dos reprovados por nota em 2014: 90.00
-Média de frequência dos reprovados por nota em 2015: 94.67
-Média de frequência dos reprovados por nota em 2016: 86.20
-Média de frequência dos reprovados por nota em 2017: 93.67
-Média de frequência dos reprovados por nota em 2018: 93.45
-Média de frequência dos reprovados por nota em 2019: 90.89
-Média de frequência dos reprovados por nota em 2020: 97.42
-Média de frequência dos reprovados por nota em 2021: 94.92
-Média de frequência dos reprovados por nota em 2022: 95.59
+Total de alunos 'R-nota': 166 de 765 alunos (Frequência relativa: 21.70%)
+No ano de 2011: 0 de 1 alunos (Frequência relativa: 0.00%)
+No ano de 2012: 2 de 4 alunos (Frequência relativa: 50.00%)
+No ano de 2013: 3 de 10 alunos (Frequência relativa: 30.00%)
+No ano de 2014: 1 de 12 alunos (Frequência relativa: 8.33%)
+No ano de 2015: 6 de 33 alunos (Frequência relativa: 18.18%)
+No ano de 2016: 5 de 50 alunos (Frequência relativa: 10.00%)
+No ano de 2017: 21 de 89 alunos (Frequência relativa: 23.60%)
+No ano de 2018: 22 de 91 alunos (Frequência relativa: 24.18%)
+No ano de 2019: 28 de 120 alunos (Frequência relativa: 23.33%)
+No ano de 2020: 12 de 96 alunos (Frequência relativa: 12.50%)
+No ano de 2021: 39 de 138 alunos (Frequência relativa: 28.26%)
+No ano de 2022: 27 de 121 alunos (Frequência relativa: 22.31%)
+
+
 ------------------------------------------------------------------
 4. Qual a porcentagem de evasões (total e anual)?
 ------------------------------------------------------------------
@@ -943,16 +1133,21 @@ Taxa de evasão em 2020: 20.83%
 Taxa de evasão em 2021: 9.42%
 Taxa de evasão em 2022: 1.65%
 Média de evasão pré-pandemia (2011-2019): 1.15%
+
+
 ------------------------------------------------------------------
 5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? Considere como anos de pandemia os anos de 2020 e 2021.
-
 ------------------------------------------------------------------
 Nos anos de pandemia é possível ver que o rendimento dos aprovados teve um incremento de 11.92%
 Já as taxas de evasão, que tinham um histórico de 1.15%, foram para 20.83% em 2020.
 Por fim, com relação as reprovações, observa-se que a média das notas baixou de [media pre pandemia] para [media de 2020] e [media de 2021], mesmo a frequencia tendo subido de [media pre pandemia] para [media de 2020] e [media de 2021] 
+
+
 ------------------------------------------------------------------
 6. Compare a volta às aulas híbrida (2022 período 1) com os anos de pandemia e os anos anteriores.
 ------------------------------------------------------------------
+
+
 
 ------------------------------------------------------------------
 7. Compare a volta às aulas presencial (2022 período 2) com a volta híbrida do item anterior.
