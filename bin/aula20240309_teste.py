@@ -31,4 +31,3 @@ while True:
     if resposta.lower() == 's':
         break
 
-x22 = x
