@@ -11,7 +11,7 @@ de um período pré-determinado, extraia destes dados arquivos de interesse e os
 
 O script deve receber 4 (quatro) parâmetros e ser invocado da seguinte forma:
 
-* baixaDadosTransp diaIni diaFim mes ano , onde:
+* `baixaDadosTransp diaIni diaFim mes ano` , onde:
     * baixaDadosTransp é o nome do script
     * diaIni é o dia inicial a ser baixado
     * diaFim é o dia final a ser baixado
