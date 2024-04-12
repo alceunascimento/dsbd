@@ -1,0 +1,19 @@
+
+
+
+para o vim
+vim meuscript.sh
+
+como sair do vim
+:q sair sem gravar
+:x grava e sair
+:w grava e fica no arquivo
+
+
+
+para um for
+
+for
+do
+
+done
