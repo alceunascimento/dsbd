@@ -35,7 +35,7 @@ dir()
 #------------------------------------------------------------------------
 
 # Caminho do arquivo CSV
-path =  r"C:\Users\DELL\OneDrive\python\python_projects\dsbd\lingprog\data\dsbd_trab2.csv"
+path =  "/home/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"
 
 df = pd.read_csv(path, encoding='UTF-8')
 df
