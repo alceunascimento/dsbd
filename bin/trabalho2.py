@@ -35,6 +35,7 @@ dir()
 # Caminho do arquivo CSV
 path = '/home/aenascimento/dsbd_project1/data/dsbd_trab2.csv'
 
+
 # Lista para armazenar as linhas do CSV
 data = []
 
