@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define o caminho para o arquivo quiz.txt
-arquivo_quiz="/home/aenascimento/dsbd/infracomp/data/quiz.txt"
-
+# (linux) arquivo_quiz="/home/aenascimento/dsbd/infracomp/data/quiz.txt"
+arquivo_quiz="C:\Users\DELL\OneDrive\python\python_projects\dsbd\infracomp\data\quiz.txt"
 
 # a. Mostrar apenas o NOME e o CONCEITO dos alunos
 echo "a. Mostrar apenas o NOME e o CONCEITO dos alunos:"
@@ -22,6 +22,7 @@ sed 's/,A,/,APROVADO,/g' "$arquivo_quiz"
 #    ,APROVADO,: é o padrão de substituição que substituirá o conceito 'A' pelo termo 'APROVADO'.
 #    g: é uma opção que indica para substituir todas as ocorrências encontradas na linha, não apenas a primeira.
 
+echo
 
 # c. Mostrar apenas as linhas que tenham duas vogais consecutivas
 echo -e "\nc. Mostrar apenas linhas que tenham duas vogais consecutivas:"
