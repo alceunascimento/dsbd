@@ -17,8 +17,8 @@ inicioPeriodo=1
 fimPeriodo=5
 
 # Diretórios que serão utilizados para baixar os dados e processá-los
-dataDir="./dados"
-tmpDir="./tmp"
+dataDir="C:\Users\DELL\OneDrive\python\python_projects\dsbd\infracomp\data"
+tmpDir="C:\Users\DELL\OneDrive\python\python_projects\dsbd\infracomp\tmp"
 
 # cria diretório
 mkdir $dataDir

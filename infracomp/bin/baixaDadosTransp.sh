@@ -1,6 +1,19 @@
 #!/bin/bash
 
-#!/bin/bash
+# script em BASH que baixe dados do portal da tranparência 
+# [link](http://portaldatransparencia.gov.br/download-de-dados/despesas) 
+#de um período pré-determinado, extraia destes dados arquivos de interesse e os agrupe em um único arquivo .csv
+
+#O script deve receber 4 (quatro) parâmetros e ser invocado da seguinte forma:
+
+#* `baixaDadosTransp diaIni diaFim mes ano` , onde:
+#    * `baixaDadosTransp` é o nome do script
+#    * `diaIni` é o dia inicial a ser baixado
+#    * `diaFim` é o dia final a ser baixado
+#    * `mes` é o mes dos dados requeridos
+#    * `ano` é o ano dos dados requeridos
+
+# exemplo: ./baixaDadosTransp.sh 01 01 01 2020
 
 # Função para verificar se a quantidade de parâmetros está correta
 if [ "$#" -ne 4 ]; then
