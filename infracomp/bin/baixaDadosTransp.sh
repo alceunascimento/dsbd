@@ -23,6 +23,7 @@ ano=$4
 website="https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/despesas"
 
 # Diretórios de trabalho
+## nota: o script esta na pasta bin e os diretorios sao criados no nivel acima "../"
 tmpDir="../tmp"
 dataDir="../data"
 
