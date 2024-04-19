@@ -1,80 +1,93 @@
 #!/bin/bash
 
-# script em BASH que baixe dados do portal da tranparência 
-# [link](http://portaldatransparencia.gov.br/download-de-dados/despesas) 
-#de um período pré-determinado, extraia destes dados arquivos de interesse e os agrupe em um único arquivo .csv
+# script em BASH que baixa dados do Portal da Tranparência 
+# Seleciona um período determinado, extrai estes dados em arquivos de interesse e os agrupa em um único arquivo .csv
+# O script recebe 4 (quatro) parâmetros, invocados da seguinte forma:
 
-#O script deve receber 4 (quatro) parâmetros e ser invocado da seguinte forma:
+# `baixaDadosTransp diaIni diaFim mes ano` , onde:
+#     `baixaDadosTransp` é o nome do script
+#     `diaIni` é o dia inicial a ser baixado
+#     `diaFim` é o dia final a ser baixado
+#     `mes` é o mes dos dados requeridos
+#     `ano` é o ano dos dados requeridos
 
-#* `baixaDadosTransp diaIni diaFim mes ano` , onde:
-#    * `baixaDadosTransp` é o nome do script
-#    * `diaIni` é o dia inicial a ser baixado
-#    * `diaFim` é o dia final a ser baixado
-#    * `mes` é o mes dos dados requeridos
-#    * `ano` é o ano dos dados requeridos
+# exemplo: ./baixaDadosTransp.sh 1 10 01 2020
 
-# exemplo: ./baixaDadosTransp.sh 01 01 01 2020
-
-# Função para verificar se a quantidade de parâmetros está correta
-if [ "$#" -ne 4 ]; then
-    echo "Uso: $0 diaIni diaFim mes ano"
-    exit 1
-fi
-
-# Recebendo os parâmetros
+# Atribui os parâmetros a variáveis locais
 diaIni=$1
 diaFim=$2
 mes=$3
 ano=$4
 
-# Formatação de mês e ano para garantir o formato correto
-formattedMonth=$(printf "%02d" $mes)
-formattedYear=$(printf "%04d" $ano)
+# Website contendo os dados
+website="https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/despesas"
 
-# Criação dos diretórios para armazenar os dados temporários e finais
-mkdir -p ./data
-mkdir -p ./extracted
-mkdir -p ./output
+# Diretórios de trabalho
+tmpDir="../tmp"
+dataDir="../data"
 
-# Loop para baixar os dados de cada dia dentro do intervalo especificado
-for (( dia=$diaIni; dia<=$diaFim; dia++ ))
-do
-    formattedDay=$(printf "%02d" $dia)
-    fileName="${formattedYear}${formattedMonth}${formattedDay}"
-    zipFile="${fileName}.zip"
-    url="http://portaldatransparencia.gov.br/download-de-dados/despesas/${zipFile}"
+# Cria o diretório temporário se não existir
+mkdir -p $tmpDir
+# Cria o diretório de dados se não existir
+mkdir -p $dataDir
 
-    # Download do arquivo
-    wget -q $url -O "./data/$zipFile"
+# Loop para baixar os arquivos por cada dia especificado
+for dia in $(seq -f "%02g" $diaIni $diaFim); do
+  zipFile=$ano$mes$dia'_Despesas.zip'
 
-    # Verifica se o arquivo foi baixado e então extrai os arquivos específicos
-    if [ -f "./data/$zipFile" ]; then
-        unzip -q "./data/$zipFile" "${fileName}_Despesas_Empenho.csv" "${fileName}_Despesas_Pagamento.csv" -d ./extracted
-    fi
+  # Baixa o arquivo ZIP
+  echo -n "Baixando arquivo $zipFile ..."
+  wget $website/$zipFile 2> /dev/null
+  echo OK
+
+  # Descompacta o arquivo no diretório temporário
+  echo -n "Descompactando arquivo $zipFile ..."
+  unzip -o $zipFile '*Empenho.csv' -d $tmpDir > /dev/null
+  unzip -o $zipFile '*Pagamento.csv' -d $tmpDir > /dev/null
+  # Remove arquivos indesejados que incluem "ItemEmpenho" no nome
+  rm -f $tmpDir/*ItemEmpenho.csv
+  echo OK
+
+  # Remove o arquivo ZIP
+  echo -n "Removendo arquivo $zipFile ..."
+  rm -f $zipFile
+  echo OK
 done
 
-# Função para concatenar os arquivos, evitando cabeçalhos repetidos
-concat_files() {
-    outputFile="./output/${formattedYear}${formattedMonth}${diaIni}-${diaFim}_Despesas_$1.csv"
-    first=1
-    for file in ./extracted/*_$1.csv; do
-        if [ "$first" -eq 1 ]; then
-            # Copia o arquivo inteiro se for o primeiro (inclui cabeçalho)
-            cat $file > $outputFile
-            first=0
-        else
-            # Para outros arquivos, pula o cabeçalho
-            tail -n +2 $file >> $outputFile
-        fi
-    done
-}
 
-# Concatenação dos arquivos de Empenho e Pagamento
-concat_files "Empenho"
-concat_files "Pagamento"
+# Consolida todos os CSVs de Empenho extraídos em um único arquivo, removendo cabeçalhos
+echo -n "Consolidando arquivos de Empenho CSV..."
+for file in $tmpDir/*Empenho.csv; do
+    # Pula a primeira linha de cada arquivo e adiciona a um arquivo temporario
+    tail -n +2 $file >> $tmpDir/consolidado_empenho.tmp
+done
 
-# Limpeza dos arquivos temporários
-rm -r ./data
-rm -r ./extracted
+# Adiciona o cabeçalho do primeiro arquivo ao arquivo a ser consolidado no final
+head -n 1 $(ls $tmpDir/*Empenho.csv | head -n 1) > $dataDir/${ano}${mes}${diaIni}-${diaFim}_Despesas_Empenho.csv
 
-echo "Arquivos processados e salvos em ./output"
+# Adiciona os dados concatenando o arquivo temporario no arquivo final
+cat $tmpDir/consolidado_empenho.tmp >> $dataDir/${ano}${mes}${diaIni}-${diaFim}_Despesas_Empenho.csv
+rm $tmpDir/consolidado_empenho.tmp
+echo "OK"
+
+
+# Consolida todos os CSVs de Pagamento extraídos em um único arquivo, removendo cabeçalhos
+echo -n "Consolidando arquivos de Pagamento CSV..."
+for file in $tmpDir/*Pagamento.csv; do
+    # Pula a primeira linha de cada arquivo e adiciona a um arquivo temporario
+    tail -n +2 $file >> $tmpDir/consolidado_pagamento.tmp
+done
+
+# Adiciona o cabeçalho do primeiro arquivo ao arquivo a ser consolidado no final
+head -n 1 $(ls $tmpDir/*Pagamento.csv | head -n 1) > $dataDir/${ano}${mes}${diaIni}-${diaFim}_Despesas_Pagamento.csv
+
+# Adiciona os dados concatenando o arquivo temporario no arquivo final
+cat $tmpDir/consolidado_pagamento.tmp >> $dataDir/${ano}${mes}${diaIni}-${diaFim}_Despesas_Pagamento.csv
+rm $tmpDir/consolidado_pagamento.tmp
+echo "OK"
+
+
+# Remove os arquivos CSV temporários
+echo -n "Limpando diretório temporário..."
+rm -f $tmpDir/*.csv
+echo "OK"
