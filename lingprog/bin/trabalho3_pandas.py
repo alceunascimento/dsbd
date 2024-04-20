@@ -29,6 +29,7 @@ import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 import matplotlib.pyplot as plt
 import numpy as np
+import sys 
 dir()
 
 
@@ -37,8 +38,9 @@ dir()
 #------------------------------------------------------------------------
 
 # Caminho do arquivo CSV
-path =  "/home/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"
-
+# path =  "/home/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar em casa
+path = "/home/espinf/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar na UFPR
+#path = sys.argv[1]
 df = pd.read_csv(path, encoding='UTF-8')
 df
 
@@ -89,18 +91,17 @@ print(f"Total de registros após limpeza: {df_limpo.shape[0]}")
 print("\n")
 
 # Aplicando o filtro para manter apenas os registros que não são de 'EQUIVALENCIA' ou 'APROVEITAMENTO'
+print(r"Dado que se quer analisar os alunos que efetivamente frequentaram as aulas, foram retirados os `status` de `EQUIVALENCIA` e `APROVEITAMENTO` , restando o seguinte dataFrame após remoção:")
 df_limpo = df_limpo[~df_limpo['tipo'].isin(['EQUIVALENCIA', 'APROVEITAMENTO'])]
-
-# Verificando o resultado
-print(r"Dado que se houver outro `status` para representar reprovação, este dever ser trocado para o rótulo adequado (R-nota ou R-freq), foram retirados os `status` de `EQUIVALENCIA` e `APROVEITAMENTO`, restando o seguinte dataFrame após remoção:")
 print(df_limpo.head())
 print(f"Total de registros após limpeza: {df_limpo.shape[0]}")
 print("\n")
 
+# Homogenizando o status para R-nota ou R-freq
+print(r"Dado que se houver outro `status` para representar reprovação, este dever ser trocado para o rótulo adequado (R-nota ou R-freq), resta o seguinte dataFrame após remoção:")
 
+## função para identificar e ajustar
 def check_and_correct_status(df):
-    import numpy as np
-
     # Define a nova coluna 'expected_status' baseada nas condições dadas
     conditions = [
         (df['frequencia'] < 75),
@@ -110,20 +111,20 @@ def check_and_correct_status(df):
     choices = ['R-freq', 'R-nota', 'Aprovado']
     df['expected_status'] = np.select(conditions, choices, default=df['status'])
 
-    print("Condições aplicadas e 'expected_status' definido:")
+    print("Etapa 1: condições aplicadas e 'expected_status' definido:")
     print(df[['frequencia', 'nota', 'status', 'expected_status']].head())
     print("\n")
     
     
     # Corrige todos os status discrepantes
     mask = df['status'] != df['expected_status']
-    print("Máscara de discrepâncias antes da correção:")
+    print("Etapa 2: máscara de discrepâncias antes da correção:")
     print(df.loc[mask, ['status', 'expected_status']].head())
     print("\n")
     
     df.loc[mask, 'status'] = df.loc[mask, 'expected_status']
 
-    print("DataFrame após correção de status:")
+    print("Final: DataFrame após correção de status:")
     print(df[['status', 'expected_status']].head())
     print("\n")
 
@@ -140,12 +141,18 @@ def check_and_correct_status(df):
     return df  # Retorna o DataFrame modificado
 
 
-
-# Chamar a função para verificar e corrigir o status
+## Chamar a função para verificar e corrigir o status
 df_limpo = check_and_correct_status(df_limpo)  # Substitua 'df_limpo' pelo nome do seu DataFrame
 print(f"Total de registros após limpeza: {df_limpo.shape[0]}")
-df_limpo
 print("\n")
+
+## DataFrame limpo para analise
+print("#--------------------------------------------------------------------")
+print("Dataframe limpo para analise:")
+print(df_limpo)
+print("\n")
+
+
 
 # excluindo a coluna 'tipo'
 del df_limpo['tipo']
