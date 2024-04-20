@@ -69,9 +69,9 @@ print("------------------------------------------------------------------")
 print("C. Analisando os dados:")       
 print("------------------------------------------------------------------")
 print("Analise o dataset e responda as seguintes perguntas:")
-1. Quais as top 5 disciplinas que mais geram cancelamentos por parte dos estudantes ao longo dos anos (plote a resposta em um gráfico);
-2. Quais as top 5 disciplinas que possuem aprovações em geral?
-3. Quais disciplinas possuem taxa de aprovação maior que 70% durante o todo o período?
-4. Quais disciplinas possuem taxa de reprovação maior que 70% a cada vez que são oferecidas (ex.: DiscXYZ teve 75% de reprovação em 2012; DiscABC teve 99% de reprovação em 2019, etc.)?
-5. Das disciplinas com reprovações, qual o máximo de vezes que um estudante teve que se matricular, excluindo cancelamentos, para ser aprovado?
-6. Como evoluem as taxas aprovados/reprovados nas disciplinas ao longo do tempo?
+print("1. Quais as top 5 disciplinas que mais geram cancelamentos por parte dos estudantes ao longo dos anos (plote a resposta em um gráfico);")
+print("2. Quais as top 5 disciplinas que possuem aprovações em geral?")
+print("3. Quais disciplinas possuem taxa de aprovação maior que 70% durante o todo o período?")
+print("4. Quais disciplinas possuem taxa de reprovação maior que 70% a cada vez que são oferecidas (ex.: DiscXYZ teve 75% de reprovação em 2012; DiscABC teve 99% de reprovação em 2019, etc.)?")
+print("5. Das disciplinas com reprovações, qual o máximo de vezes que um estudante teve que se matricular, excluindo cancelamentos, para ser aprovado?")
+print("6. Como evoluem as taxas aprovados/reprovados nas disciplinas ao longo do tempo?")

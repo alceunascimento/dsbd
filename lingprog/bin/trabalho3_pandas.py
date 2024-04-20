@@ -38,9 +38,10 @@ dir()
 #------------------------------------------------------------------------
 
 # Caminho do arquivo CSV
+# path = sys.argv[1] # para chamar o arquivo com o dataset como argumento no terminal
 # path =  "/home/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar em casa
 path = "/home/espinf/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar na UFPR
-#path = sys.argv[1]
+
 df = pd.read_csv(path, encoding='UTF-8')
 df
 
