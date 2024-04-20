@@ -39,7 +39,7 @@ DataFrame Limpo:
 Total de registros após limpeza: 909
 
 
-Dado que se houver outro `status` para representar reprovação, este dever ser trocado para o rótulo adequado (R-nota ou R-freq), foram retirados os `status` de `EQUIVALENCIA` e `APROVEITAMENTO`, restando o seguinte dataFrame após remoção:
+Dado que se quer analisar os alunos que efetivamente frequentaram as aulas, foram retirados os `status` de `EQUIVALENCIA` e `APROVEITAMENTO` , restando o seguinte dataFrame após remoção:
    matricula periodo   ano  nota  frequencia     status   tipo
 0          0       1  2016    67          96   Aprovado  TURMA
 1          1       1  2019     0          73     R-freq  TURMA
@@ -49,7 +49,8 @@ Dado que se houver outro `status` para representar reprovação, este dever ser 
 Total de registros após limpeza: 765
 
 
-Condições aplicadas e 'expected_status' definido:
+Dado que se houver outro `status` para representar reprovação, este dever ser trocado para o rótulo adequado (R-nota ou R-freq), resta o seguinte dataFrame após remoção:
+Etapa 1: condições aplicadas e 'expected_status' definido:
    frequencia  nota     status expected_status
 0          96    67   Aprovado        Aprovado
 1          73     0     R-freq          R-freq
@@ -58,7 +59,7 @@ Condições aplicadas e 'expected_status' definido:
 4           0     0  Cancelado          R-freq
 
 
-Máscara de discrepâncias antes da correção:
+Etapa 2: máscara de discrepâncias antes da correção:
          status expected_status
 3     Cancelado          R-freq
 4     Cancelado          R-freq
@@ -67,7 +68,7 @@ Máscara de discrepâncias antes da correção:
 12  Matriculado          R-freq
 
 
-DataFrame após correção de status:
+Final: DataFrame após correção de status:
      status expected_status
 0  Aprovado        Aprovado
 1    R-freq          R-freq
@@ -92,6 +93,24 @@ Foram realizadas correções nos status:
 
 [73 rows x 2 columns]
 Total de registros após limpeza: 765
+
+
+#--------------------------------------------------------------------
+Dataframe limpo para analise:
+     matricula periodo   ano  nota  frequencia    status   tipo
+0            0       1  2016    67          96  Aprovado  TURMA
+1            1       1  2019     0          73    R-freq  TURMA
+2            1       2  2019    11          76    R-nota  TURMA
+3            1       2  2020     0           0    R-freq  TURMA
+4            1       1  2020     0           0    R-freq  TURMA
+..         ...     ...   ...   ...         ...       ...    ...
+902        568       1  2020     0           0    R-freq  TURMA
+903        568       1  2021    88         100  Aprovado  TURMA
+905        570       1  2022    70         100  Aprovado  TURMA
+906        571       1  2018    98         100  Aprovado  TURMA
+908        572       1  2021    83         100  Aprovado  TURMA
+
+[765 rows x 7 columns]
 
 
 

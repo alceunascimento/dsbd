@@ -27,25 +27,23 @@ import csv
 import re
 import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
-import matplotlib.pyplot as plt
 import numpy as np
 import sys 
-dir()
 
+# Nota: chamando o objeto sem "print()" foi a forma que encontrei para 
+# verificar o objeto enquanto trabalhava no código.
 
 #------------------------------------------------------------------------
 # GET DATA
 #------------------------------------------------------------------------
 print("\n")
 print("------------------------------------------------------------------")
-print("A. Carregando o dataset do arquivo .CSV (dsbd_trab2.csv):")       
+print("A. Carregando o dataset do arquivo .CSV (data.csv):")       
 print("------------------------------------------------------------------")
 print("\n")
 
 # Caminho do arquivo CSV
-# path = sys.argv[1] # para chamar o arquivo com o dataset como argumento no terminal
-path =  "/home/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar em casa
-# path = "/home/espinf/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar na UFPR
+path = sys.argv[1] # para chamar o arquivo com o dataset como argumento no terminal
 df = pd.read_csv(path, encoding='UTF-8')
 print(df)
 
@@ -53,17 +51,9 @@ print(df)
 #------------------------------------------------------------------------
 # CLEAN DATA
 #------------------------------------------------------------------------
-"""
-Remove irrelevant data.
-Convert data type.
-Remove duplicates.
-Clear formatting.
-Fix errors.
-Handle missing values.
-"""
 print("\n")
 print("------------------------------------------------------------------")
-print("A. Limpando o dataset do arquivo .CSV (dsbd_trab2.csv):")       
+print("A. Limpando o dataset do arquivo .CSV (data.csv):")       
 print("------------------------------------------------------------------")
 print("\n")
 print("A. I. Premissas da analise:")
@@ -163,6 +153,8 @@ print("\n")
 del df_limpo['tipo']
 df_limpo
 
+
+
 print("\n")
 #------------------------------------------------------------------------
 # ANALYSE DATA
@@ -171,13 +163,15 @@ print("#--------------------------------------------------------------------")
 print("B. Analisando o dataset")
 print("#--------------------------------------------------------------------")
 
+
+
 print("\n")
 print("#--------------------------------------------------------------------")
 print("1. Qual é a média de nota dos aprovados (no período total e por ano)?")
+print("\n")
 
 #------------------------------------------------------------------------
 # 1.a.0 media de nota dos aprovados NO PERIODO TOTAL
-
 aprovados_notas = df_limpo[df_limpo['status'] == 'Aprovado']['nota']  # Filtra notas dos aprovados
 media_total = aprovados_notas.mean()  # Calcula a média de notas dos aprovados
 print(f"Média de nota dos aprovados no período total: {media_total:.2f}")
@@ -218,6 +212,7 @@ print("\n")
 print("#--------------------------------------------------------------------")
 #------------------------------------------------------------------------
 print("2. Qual é a média de nota dos reprovados por nota (período total e ano)?")
+print("\n")
 
 # 2.a.0 média do notas dos reprovados no periodo TOTAL
 reprovados_notas_total = df_limpo[df_limpo['status'] == 'R-nota']['nota']
@@ -263,6 +258,7 @@ print("#--------------------------------------------------------------------")
 #------------------------------------------------------------------------
 # 3. Qual é a frequência dos reprovados por nota (período total e por ano)?
 print("3. Qual é a frequência dos reprovados por nota (período total e por ano)?")
+print("\n")
 
 # 3.a. TOTAL
 # 1. Filtrar alunos que reprovaram por nota
@@ -270,7 +266,7 @@ reprovados_por_nota = df_limpo[df_limpo['status'] == 'R-nota']
 
 # 2. Determinar a média da frequência desses alunos NO TOTAL
 media_frequencia_reprovados = reprovados_por_nota['frequencia'].mean()
-print(f"A média de frequência dos reprovados por nota é de {media_frequencia_reprovados:.2f}, para todos os períodos")
+print(f"A média de frequência dos reprovados por nota é de {media_frequencia_reprovados:.2f}, para todos os períodos.")
 
 
 # 3. POR ANOS - Calcular a média da frequência dos reprovados por nota para cada ano e exibir
@@ -282,52 +278,20 @@ for ano, media in media_frequencia_reprovados_por_ano.items():
 
 
 
-# GRAFICOS
-"""
-# 3. Plotar um histograma das frequências dos alunos reprovados por nota
-plt.figure(figsize=(10, 6))
-plt.hist(reprovados_por_nota['frequencia'], bins=10, color='blue', alpha=0.7)
-plt.title('Histograma de Frequência dos Reprovados por Nota')
-plt.xlabel('Frequência')
-plt.ylabel('Quantidade de Alunos')
-plt.grid(True)
-plt.show()
-
-# 3.b. POR ANOS
-# Filtrar alunos que reprovaram por nota
-reprovados_por_nota = df_limpo[df_limpo['status'] == 'R-nota']
-# Configurando o gráfico
-plt.figure(figsize=(12, 8))
-colors = plt.cm.viridis(np.linspace(0, 1, len(reprovados_por_nota['ano'].unique())))  # Gerar cores diferentes
-# Agrupar por ano e plotar as frequências
-for i, (ano, group) in enumerate(reprovados_por_nota.groupby('ano')):
-    # Criar um histograma de frequências para cada ano e plotar como linha
-    freq_counts, freq_edges = np.histogram(group['frequencia'], bins=10, range=(75, 100))
-    freq_centers = (freq_edges[:-1] + freq_edges[1:]) / 2  # Calcular os centros dos bins para plotar como linha
-    plt.plot(freq_centers, freq_counts, label=f'Ano {ano}', color=colors[i], marker='o')
-
-plt.title('Distribuição de Frequências dos Reprovados por Nota por Ano (75-100)')
-plt.xlabel('Frequência')
-plt.ylabel('Quantidade de Alunos')
-plt.xlim(75, 100)  # Restringir o eixo X para mostrar apenas frequências entre 75 e 100
-plt.legend(title='Ano')
-plt.grid(True)
-plt.show()
-"""
-
 
 print("\n")
 print("#--------------------------------------------------------------------")
 #------------------------------------------------------------------------
 # 4. Qual a porcentagem de evasões (total e anual)?
 print("4. Qual a porcentagem de evasões (total e anual)?")
+print("\n")
 
 # 4.a. evasao total
 # Calcular o total de 'R-freq' e o total de registros
 total_r_freq = df_limpo[df_limpo['status'] == 'R-freq'].shape[0]
 total_registros = df_limpo.shape[0]
 porcentagem_total_r_freq = (total_r_freq / total_registros) * 100
-print(f"Foram considerados como 'evasão' os {total_r_freq:.2f} alunos que reprovaram por frequencia (incluídos aqui aqueles que cancelaram a disciplina).")
+print(f"Foram considerados como 'evasão' os {total_r_freq:.2f} alunos que reprovaram por frequência (incluídos aqui aqueles que cancelaram a disciplina).")
 print(f"A porcentaem de evasão é de: {porcentagem_total_r_freq:.2f}%")
 
 # 4.b. evasao por anos
@@ -339,13 +303,16 @@ porcentagem_r_freq_por_ano = (r_freq_por_ano / total_por_ano) * 100
 print("A porcentagem de evasão por ano é de:")
 print(porcentagem_r_freq_por_ano)
 
+
+
+
+
 print("\n")
 print("#--------------------------------------------------------------------")
 #------------------------------------------------------------------------
 # 5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, 
 # considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? 
 # Considere como anos de pandemia os anos de 2020 e 2021.
-
 print(f"5. Como os anos de pandemia impactaram no rendimento dos estudantes em relação aos anos anteriores, considerando o rendimento dos aprovados, a taxa de cancelamento e as reprovações? Considere como anos de pandemia os anos de 2020 e 2021.")
 print("\n")
 
@@ -379,12 +346,17 @@ print(f"Nos anos de pandemia é possível ver que o rendimento dos aprovados tev
 print(f"Já as taxas de evasão, que tinham um histórico de {taxa_cancelamento_pre_pandemia:.2f}%, foram para {taxa_cancelamento_pandemia:.2f}% em 2020/2021, um incremeno de {(taxa_cancelamento_pandemia-taxa_cancelamento_pre_pandemia):.2f}%")
 print(f"Por fim, com relação as reprovações, observa-se que a média das notas dos reprovados baixou em {(1-(media_notas_reprovacoes_pandemia/media_notas_reprovacoes_pre_pandemia)):.2f}%.")
 
+
+
+
+
+
 print("\n")
 print("#--------------------------------------------------------------------")
 #------------------------------------------------------------------------
 # 6. Compare a volta às aulas híbrida (2022 período 1) com os anos de pandemia e os anos anteriores.
-
 print("6. Compare a volta às aulas híbrida (2022 período 1) com os anos de pandemia e os anos anteriores.")
+print("\n")
 
 # Definindo os anos de pandemia e anos pré-pandemia
 anos_pandemia = [2020, 2021]
@@ -420,12 +392,16 @@ print(f"Média de notas dos reprovados durante a pandemia: {media_notas_reprovad
 print(f"Média de notas dos reprovados antes da pandemia: {media_notas_reprovados_pre_pandemia:.2f}")
 
 
+
+
+
+
 print("\n")
 print("#--------------------------------------------------------------------")
 #------------------------------------------------------------------------
 # 7. Compare a volta às aulas presencial (2022 período 2) com a volta híbrida do item anterior.
-
 print("7. Compare a volta às aulas presencial (2022 período 2) com a volta híbrida do item anterior.")
+print("\n")
 
 # 1. Rendimento dos Aprovados
 media_notas_aprovados_2022_periodo1 = df_limpo[(df_limpo['status'] == 'Aprovado') & (df_limpo['ano'] == 2022) & (df_limpo['periodo'] == '1')]['nota'].mean()
@@ -441,6 +417,11 @@ media_notas_reprovados_2022_periodo2 = df_limpo[(df_limpo['status'] == 'R-nota')
 
 # Resultados
 print("Comparação entre a volta às aulas híbrida e presencial em 2022:")
-print(f"Rendimento dos Aprovados - Período 1: {media_notas_aprovados_2022_periodo1:.2f}, Período 2: {media_notas_aprovados_2022_periodo2:.2f}")
-print(f"Taxa de 'R-freq' - Período 1: {taxa_r_freq_2022_periodo1:.2f}%, Período 2: {taxa_r_freq_2022_periodo2:.2f}%")
-print(f"Média de Notas dos Reprovados por Nota - Período 1: {media_notas_reprovados_2022_periodo1:.2f}, Período 2: {media_notas_reprovados_2022_periodo2:.2f}")
+print(f"A. O rendimento dos Aprovados no Período 1 foi de: {media_notas_aprovados_2022_periodo1:.2f} e no Período 2 foi de: {media_notas_aprovados_2022_periodo2:.2f}")
+print(f"B. A taxa de reprovados por freqência (R-freq) no Período 1 foi de: {taxa_r_freq_2022_periodo1:.2f}% e no Período 2 foi de: {taxa_r_freq_2022_periodo2:.2f}%")
+print(f"C. A média de notas dos Reprovados por Nota (R-nota) no Período 1 foi de: {media_notas_reprovados_2022_periodo1:.2f} e no Período 2 foi de: {media_notas_reprovados_2022_periodo2:.2f}")
+print("\n")
+print("Nota: como os dados o Período 2 de 2022 estão incomplementos não devem ser considerados os indicadores A, B e C para este período")
+
+print("\n")
+print("Fim.")
