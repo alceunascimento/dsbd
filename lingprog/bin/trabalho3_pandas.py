@@ -43,8 +43,8 @@ print("------------------------------------------------------------------")
 print("\n")
 
 # Caminho do arquivo CSV
-# path = sys.argv[1] # para chamar o arquivo com o dataset como argumento no terminal
-path =  "/home/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar em casa
+path = sys.argv[1] # para chamar o arquivo com o dataset como argumento no terminal
+# path =  "/home/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar em casa
 # path = "/home/espinf/aenascimento/dsbd/lingprog/data/dsbd_trab2.csv"  # rodar na UFPR
 df = pd.read_csv(path, encoding='UTF-8')
 print(df)
@@ -281,39 +281,6 @@ for ano, media in media_frequencia_reprovados_por_ano.items():
 
 
 
-
-# GRAFICOS
-"""
-# 3. Plotar um histograma das frequências dos alunos reprovados por nota
-plt.figure(figsize=(10, 6))
-plt.hist(reprovados_por_nota['frequencia'], bins=10, color='blue', alpha=0.7)
-plt.title('Histograma de Frequência dos Reprovados por Nota')
-plt.xlabel('Frequência')
-plt.ylabel('Quantidade de Alunos')
-plt.grid(True)
-plt.show()
-
-# 3.b. POR ANOS
-# Filtrar alunos que reprovaram por nota
-reprovados_por_nota = df_limpo[df_limpo['status'] == 'R-nota']
-# Configurando o gráfico
-plt.figure(figsize=(12, 8))
-colors = plt.cm.viridis(np.linspace(0, 1, len(reprovados_por_nota['ano'].unique())))  # Gerar cores diferentes
-# Agrupar por ano e plotar as frequências
-for i, (ano, group) in enumerate(reprovados_por_nota.groupby('ano')):
-    # Criar um histograma de frequências para cada ano e plotar como linha
-    freq_counts, freq_edges = np.histogram(group['frequencia'], bins=10, range=(75, 100))
-    freq_centers = (freq_edges[:-1] + freq_edges[1:]) / 2  # Calcular os centros dos bins para plotar como linha
-    plt.plot(freq_centers, freq_counts, label=f'Ano {ano}', color=colors[i], marker='o')
-
-plt.title('Distribuição de Frequências dos Reprovados por Nota por Ano (75-100)')
-plt.xlabel('Frequência')
-plt.ylabel('Quantidade de Alunos')
-plt.xlim(75, 100)  # Restringir o eixo X para mostrar apenas frequências entre 75 e 100
-plt.legend(title='Ano')
-plt.grid(True)
-plt.show()
-"""
 
 
 print("\n")
