@@ -49,6 +49,7 @@ e
 # CIFRANDO
 # mensagem é "3"
 m1 = 3
+
 # chave publica é 35,5
 n = 35
 e = 5
@@ -57,6 +58,9 @@ c
 
 # DESCIFRANDO
 # chave privada é 35,29
+n = 35
+e = 5
+c = 12
 d = 29
 
 m2 = c**d % n
@@ -66,10 +70,44 @@ m2 == m1
 
 
 # Exercicios
-M = (20,5,15,17)
+
+# Descifrando uma mensagem criptograda
+# chave publica
 n = 35
 e = 5
+# chave privada
+n = n
 d = 29
+
+# mensagem recebida 
+cripto = (12,23,0)
+
+# Lista para armazenar os valores descriptografados
+mensagem = []
+
+# Loop para descriptografar cada elemento da lista cripto
+for c in cripto:
+    m = c ** d % n
+    mensagem.append(m)
+mensagem
+
+# Função para converter o valor numérico de volta para letra do alfabeto
+def numero_para_letra(numero):
+    return chr(numero + 65)  # Adiciona 65 para mapear para as letras maiúsculas ASCII
+
+# Lista para armazenar as letras correspondentes aos valores descriptografados
+letras = []
+
+# Loop para converter os valores numéricos de volta para letras
+for valor in mensagem:
+    letra = numero_para_letra(valor)
+    letras.append(letra)
+
+letras
+
+
+
+# outros
 
 c1 = M[0]**e % n
 c1
@@ -78,6 +116,7 @@ f
 
 primo = 2**1024 # primo minimo
 primo
+
 
 
  
