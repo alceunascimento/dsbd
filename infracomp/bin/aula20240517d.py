@@ -14,7 +14,7 @@ def pi_naive(start, end, step):
     for i in range(start, end):
         x = (i + 0.5) * step
         sum = sum + 4.0/(1.0 + x*x)
-    return(sum)
+    print(sum)
 
 
 if __name__ == "__main__":

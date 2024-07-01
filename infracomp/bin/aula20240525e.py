@@ -13,7 +13,7 @@ import time
 
 PROCS = 2
 
-def pi(val, start, end, step,sums):
+def pi(val, start, end, step, sums):
     print("Start: " + str(start))
     print("End: " + str(end))
     sum = 0.0
@@ -50,4 +50,4 @@ if __name__ == "__main__":
     pi = step * v.value
     
     print("Valor Pi: %.20f" %pi)
-    print("Tempo Pi: %.8f s" %(toc-tic)
+    print("Tempo Pi: %.8f s" %(toc-tic))

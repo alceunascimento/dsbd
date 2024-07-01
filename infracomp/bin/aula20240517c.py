@@ -1,11 +1,4 @@
-# MULTIPROCESSOS EM PYTHON
-
-# setup
-from multiprocessing import Process
 import time
-
-# script 
-
 
 def pi_naive(start, end, step):
     print('Start: ', str(start))
