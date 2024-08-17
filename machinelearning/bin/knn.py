@@ -20,7 +20,7 @@ def main(fname):
         y_data = data[:,0]
 
         print ("Spliting data...")
-        X_train, X_test, y_train, y_test =  train_test_split(X_data, y_data, test_size=0.5, random_state = 5)
+        X_train, X_test, y_train, y_test =  train_test_split(X_data, y_data, test_size=0.2, random_state = 5)
 
         #scaler = preprocessing.MinMaxScaler()
         #X_train = scaler.fit_transform(X_train)
