@@ -1,6 +1,0 @@
-https://alceunascimento-pmcdata-home-kh4spx.streamlit.app/
-
-NOTAS: os dados ainda não foram carregados pois ainda estou obtendo ele junto á PMC.
-Estou com diveros processos administrativos (e judiciais) contra a PMC para obter os dados.
-Há um projeto de lei na Camara Municipal tratando do tema.
-É um assunto extremamente relevante.
