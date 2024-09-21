@@ -56,3 +56,18 @@ Tempo de eventos
 
 y = tempo ate o evento
 
+Foco: analisar o tempo esperado ate um evento ocorrer
+
+> Em Economia: *duration analisys* ou *duration modelling*
+
+
+Especies:
+- Tempos de falha : 
+- Tempos de censura : uma forma de dados faltantes. o Evento nao eh observado como o estudo foi terminado antes de todos os sujeitos apresentaram o eventos.
+
+Tipos de Censura:
+- todos falham antes do 
+- censuras ocorrem devido ao termino do estudo
+- censuras ocorrem
+- censuras ocorrem
+
