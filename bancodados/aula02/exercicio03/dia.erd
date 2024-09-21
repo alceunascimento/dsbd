@@ -1,0 +1,155 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dineug/erd-editor/main/json-schema/schema.json",
+  "version": "3.0.0",
+  "settings": {
+    "width": 2000,
+    "height": 2000,
+    "scrollTop": 0,
+    "scrollLeft": 0,
+    "zoomLevel": 1,
+    "show": 431,
+    "database": 32,
+    "databaseName": "",
+    "canvasType": "ERD",
+    "language": 1,
+    "tableNameCase": 4,
+    "columnNameCase": 2,
+    "bracketType": 1,
+    "relationshipDataTypeSync": true,
+    "relationshipOptimization": false,
+    "columnOrder": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "maxWidthComment": -1,
+    "ignoreSaveSettings": 0
+  },
+  "doc": {
+    "tableIds": [
+      "Wv_LSRdQ1N2rH4El81wux",
+      "m--xVQT9WEypMaq2rz1kQ",
+      "0BWRnSYwkwugOIcgQO92L"
+    ],
+    "relationshipIds": [],
+    "indexIds": [
+      "iDrhNebc-OKZhXhSeEvFQ"
+    ],
+    "memoIds": []
+  },
+  "collections": {
+    "tableEntities": {
+      "Wv_LSRdQ1N2rH4El81wux": {
+        "id": "Wv_LSRdQ1N2rH4El81wux",
+        "name": "regiao",
+        "comment": "",
+        "columnIds": [],
+        "seqColumnIds": [],
+        "ui": {
+          "x": 200,
+          "y": 100,
+          "zIndex": 2,
+          "widthName": 60,
+          "widthComment": 60,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1724509780065,
+          "createAt": 1724509775719
+        }
+      },
+      "m--xVQT9WEypMaq2rz1kQ": {
+        "id": "m--xVQT9WEypMaq2rz1kQ",
+        "name": "municipio",
+        "comment": "",
+        "columnIds": [],
+        "seqColumnIds": [],
+        "ui": {
+          "x": 698,
+          "y": 185,
+          "zIndex": 5,
+          "widthName": 60,
+          "widthComment": 60,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1724509810709,
+          "createAt": 1724509784325
+        }
+      },
+      "0BWRnSYwkwugOIcgQO92L": {
+        "id": "0BWRnSYwkwugOIcgQO92L",
+        "name": "estado",
+        "comment": "",
+        "columnIds": [],
+        "seqColumnIds": [],
+        "ui": {
+          "x": 193,
+          "y": 264,
+          "zIndex": 9,
+          "widthName": 60,
+          "widthComment": 60,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1724509809424,
+          "createAt": 1724509793312
+        }
+      }
+    },
+    "tableColumnEntities": {},
+    "relationshipEntities": {},
+    "indexEntities": {
+      "iDrhNebc-OKZhXhSeEvFQ": {
+        "id": "iDrhNebc-OKZhXhSeEvFQ",
+        "name": "",
+        "tableId": "Wv_LSRdQ1N2rH4El81wux",
+        "indexColumnIds": [],
+        "seqIndexColumnIds": [],
+        "unique": false,
+        "meta": {
+          "updateAt": 1724509848490,
+          "createAt": 1724509848490
+        }
+      }
+    },
+    "indexColumnEntities": {},
+    "memoEntities": {}
+  },
+  "lww": {
+    "Wv_LSRdQ1N2rH4El81wux": [
+      "tableEntities",
+      1724509775717,
+      -1,
+      {
+        "name": 1724509780064
+      }
+    ],
+    "m--xVQT9WEypMaq2rz1kQ": [
+      "tableEntities",
+      1724509784324,
+      -1,
+      {
+        "name": 1724509791376
+      }
+    ],
+    "0BWRnSYwkwugOIcgQO92L": [
+      "tableEntities",
+      1724509793311,
+      -1,
+      {
+        "name": 1724509796416
+      }
+    ],
+    "iDrhNebc-OKZhXhSeEvFQ": [
+      "indexEntities",
+      1724509848486,
+      -1,
+      {}
+    ]
+  }
+}
