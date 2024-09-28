@@ -12,11 +12,14 @@
   - [Combinacao de classificadores](#combinacao-de-classificadores)
 - [2a PARTE](#2a-parte)
   - [Analise de Sobrevivencia](#analise-de-sobrevivencia)
+- [3a Parte](#3a-parte)
+  - [Redes Neurais](#redes-neurais)
+    - [chute para neuronios](#chute-para-neuronios)
 
 
 
 # 1a PARTE
-Prof. 
+Prof. Prof. Luiz Eduardo S. Oliveira
 
 ## Introducao
 Slide: 
@@ -70,4 +73,16 @@ Tipos de Censura:
 - censuras ocorrem devido ao termino do estudo
 - censuras ocorrem
 - censuras ocorrem
+
+
+
+# 3a Parte
+Prof. Prof. Luiz Eduardo S. Oliveira
+
+## Redes Neurais
+
+
+### chute para neuronios
+Se voce tem 100 classes
+neuronios escondidos = (100 + 10 ) / 2 
 
