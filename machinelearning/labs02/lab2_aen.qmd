@@ -1,0 +1,184 @@
+---
+title: "LAB2: Comparação de Classificadores"
+author: "Alceu Eilert Nascimento"
+format:
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+---
+
+# Introdução
+
+Neste trabalho, utilizamos os classificadores K-Nearest Neighbors (KNN), Naïve Bayes (Bernoulli, Gaussian e Multinomial), Linear Discriminant Analysis (LDA) e Regressão Logística para comparar seus desempenhos com uma base de treinamento crescente. 
+
+A base de treinamento começou com 1000 exemplos e aumentou até 20.000 exemplos, em blocos de 1.000. 
+
+As perguntas principais abordadas são:
+
+* Qual classificador tem o melhor desempenho com menos de 1000 exemplos?
+* Qual classificador tem o melhor desempenho com todos os dados?
+* Qual é o classificador mais rápido para classificar os 58.000 exemplos de teste?
+* Os erros são os mesmos para todos os classificadores ao utilizar toda a base de treinamento?
+
+# Scripts e Metodologia
+
+Para o treinamento e avaliação dos classificadores, utilizamos o código de Python dado pelo professo (lab2.py) com algumas adaptações:
+
+```{python}
+import sys
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+
+from sklearn import linear_model
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
+from sklearn.metrics import confusion_matrix
+from sklearn.datasets import load_svmlight_file
+
+from sklearn.naive_bayes import GaussianNB, BernoulliNB, MultinomialNB
+
+
+def evaluate_classifiers(X_train, y_train, X_test, y_test, batchsize=1000):
+    classifiers = {
+        'KNN': KNeighborsClassifier(n_neighbors=3),
+        'Logistic Regression': linear_model.LogisticRegression(),
+        'Linear Discriminant Analysis': LinearDiscriminantAnalysis(),
+        'GaussianNB': GaussianNB(),
+        'BernoulliNB': BernoulliNB(),
+        'MultinomialNB': MultinomialNB(),
+    }
+
+    results = {name: [] for name in classifiers}
+    times = {}  # Dicionário para armazenar o tempo de classificação dos 58k exemplos de teste
+
+    for size in range(batchsize, X_train.shape[0] + 1, batchsize):
+        X_train_subset = X_train[:size].toarray()
+        y_train_subset = y_train[:size]
+
+        print(f"Tamanho da base de treinamento: {size}")
+        for name, clf in classifiers.items():
+            start_time = time.time()
+            clf.fit(X_train_subset, y_train_subset)
+            score = clf.score(X_test.toarray(), y_test)
+            elapsed_time = time.time() - start_time
+            print(f"Classificador: {name} | Acurácia: {score:.4f} | Tempo: {elapsed_time:.2f} segs.")
+            results[name].append(score)
+
+            # Predição dos dados de teste e tempo de classificação para 58.000 exemplos
+            start_pred_time = time.time()
+            y_pred = clf.predict(X_test.toarray())
+            pred_time = time.time() - start_pred_time
+            
+            # Imprime a matriz de confusão para o classificador atual
+            print(f"Matriz de Confusão para {name}:")
+            cm = confusion_matrix(y_test, y_pred)
+            print(cm)
+            
+            # Armazena o tempo de classificação no dicionário
+            if size == X_train.shape[0]:  # Apenas para o último bloco de treinamento (todos os dados)
+                times[name] = pred_time
+
+    return results, times
+
+def plot_results(results, batchsize, total_samples):
+    """
+    Função para plotar os resultados de acurácia em função do tamanho da base de treinamento.
+    """
+    training_sizes = list(range(batchsize, total_samples + 1, batchsize))
+    
+    # Plotar o gráfico para cada classificador
+    plt.figure(figsize=(10, 6))
+    
+    for name, scores in results.items():
+        plt.plot(training_sizes, scores, label=name)
+    
+    # Configurações do gráfico
+    plt.title('Desempenho dos Classificadores em Função do Tamanho da Base de Treinamento')
+    plt.xlabel('Tamanho da Base de Treinamento (número de exemplos)')
+    plt.ylabel('Acurácia na Base de Testes')
+    plt.legend(loc='lower right')
+    plt.grid(True)
+    plt.show()
+
+def print_classification_times(times):
+    """
+    Função para exibir os tempos de classificação em uma tabela.
+    """
+    print("\nTabela de Tempos de Classificação (58.000 exemplos de teste):")
+    print("{:<30} {:<15}".format('Classificador', 'Tempo (segundos)'))
+    print("-" * 45)
+    for classifier, time_taken in times.items():
+        print("{:<30} {:<15.6f}".format(classifier, time_taken))
+
+if __name__ == "__main__":
+    # Carregar os dados
+    print("Carregando dados...")
+    X_train, y_train = load_svmlight_file('train.txt')
+    X_test, y_test = load_svmlight_file('test.txt')
+
+    # Avaliar os classificadores e coletar tempos de classificação
+    results, times = evaluate_classifiers(X_train, y_train, X_test, y_test)
+
+    # Plotar os resultados
+    plot_results(results, batchsize=1000, total_samples=X_train.shape[0])
+
+    # Exibir a tabela de tempos de classificação
+    print_classification_times(times)
+
+```
+
+
+# Em qual ponto o tamanho da base de treinamento deixa de ser relevante?
+
+O desempenho dos classificadores começa a saturar (ou seja, a acurácia para de aumentar de maneira significativa) ao redor de 10.000 exemplos.
+
+* KNN: A acurácia aumenta rapidamente até cerca de 5.000 exemplos, e a partir dos 10.000 exemplos, o desempenho estabiliza em torno de 0,93 a 0,94.
+* Logistic Regression: O desempenho estabiliza por volta dos 10.000 exemplos, com uma leve melhoria até o final, chegando a aproximadamente 0,91.
+* LDA: A partir de 10.000 exemplos, o classificador também mostra uma estabilização em torno de 0,92 a 0,93.
+* GaussianNB, BernoulliNB e MultinomialNB: Esses classificadores apresentam um comportamento de estabilização mais cedo, entre 5.000 e 10.000 exemplos, sem mudanças significativas após 10.000 exemplos.
+
+Portanto, para a maioria dos classificadores, 10.000 exemplos parece ser o ponto onde o aumento da base de treinamento passa a ter impacto marginal sobre o desempenho.
+
+# Qual é o classificador que tem o melhor desempenho com poucos dados (< 1000 exemplos)?
+Com menos de 1.000 exemplos:
+
+* KNN e LDA têm um desempenho inicial muito bom. O KNN apresenta um crescimento acentuado e ultrapassa a acurácia de 0,80 rapidamente.
+* GaussianNB apresenta uma queda acentuada com poucos exemplos, enquanto BernoulliNB e MultinomialNB têm desempenho mais estável, mas inferior.
+
+Com base na acurácia inicial, KNN parece ter o melhor desempenho com menos de 1.000 exemplos.
+
+# Qual é o classificador que tem melhor desempenho com todos os dados?
+
+Com todos os 20.000 exemplos:
+
+* KNN é o classificador com o melhor desempenho geral, atingindo uma acurácia ligeiramente superior a 0,94.
+* LDA segue de perto, com acurácia em torno de 0,93.
+* Logistic Regression chega a cerca de 0,91.
+* Naive Bayes (GaussianNB, BernoulliNB, MultinomialNB) têm desempenho inferior, alcançando valores entre 0,83 e 0,89
+
+# Qual é o classificador mais rápido para classificar os 58.000 exemplos de teste?
+
+O classificador mais rápido foi a Logistic Regression com 0,042 segundos, seguido de perto pelo MultinomialNB com 0,044 segundos.
+
+# Os erros são os mesmos para todos os classificadores quando todos eles utilizam toda a base de treinamento?
+
+Não, os erros não são os mesmos para todos os classificadores, mesmo quando todos eles utilizam toda a base de treinamento. A seguir estão algumas considerações sobre o motivo disso:
+
+* Algoritmos Diferentes, Mecanismos Diferentes: Cada algoritmo de classificação faz suposições diferentes sobre a estrutura dos dados, o que resulta em padrões de erro diferentes. Por exemplo:
+    * KNN classifica novos pontos com base nos vizinhos mais próximos, o que pode causar erros em áreas com classes muito misturadas.
+    * Naive Bayes assume que os atributos são condicionalmente independentes, o que pode levar a previsões erradas quando essa suposição não é verdadeira nos dados.
+    * LDA maximiza a separação entre as classes de forma linear, o que pode ser menos eficaz em dados que exigem uma fronteira de decisão não linear.
+
+* Distribuição de Erros em Matrizes de Confusão: A matriz de confusão fornece uma visão detalhada de onde os erros ocorrem, mostrando como os exemplos de uma classe são classificados incorretamente como outra classe. A matriz de confusão será diferente para cada classificador, pois:
+    * KNN pode errar mais em classes com muitos vizinhos de outras classes próximas.
+    * Logistic Regression pode errar se a relação entre as variáveis explicativas e a resposta não for linear.
+    * Naive Bayes pode cometer erros sistemáticos em classes cujas distribuições de atributos não seguem o modelo estatístico assumido.
+
+* Classificadores Probabilísticos vs Baseados em Distância: Classificadores como Naïve Bayes (probabilísticos) podem gerar erros sistemáticos em todas as classes se os atributos não forem independentes, enquanto KNN (baseado em distância) pode cometer erros mais localizados em áreas densas de dados.
+
+# Conclusão sobre as Matrizes de Confusão:
+
+Os padrões de erro (erros de classificação entre as classes) variam significativamente entre os classificadores, mesmo quando todos utilizam a mesma quantidade de dados. Isso é uma consequência direta das diferentes abordagens e suposições que cada algoritmo utiliza para separar as classes. Assim, as matrizes de confusão serão diferentes entre os classificadores, refletindo suas diferentes fraquezas e vantagens em relação ao conjunto de dados específico
