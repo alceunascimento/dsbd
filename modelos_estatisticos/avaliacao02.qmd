@@ -1,0 +1,25 @@
+---
+title: "Modelos Estatísticos: avaliação 02"
+date: last-modified
+author: "Alceu Eilert Nascimento"
+format: 
+  html:
+    code-link: true
+    code-copy: true 
+    code-fold: true 
+    code-summary: "Mostre o código"
+    theme: cosmo
+execute: 
+  echo: true
+  warning: false
+toc: true  # criar o sumario
+toc-depth: 2
+lang: pt-BR   # define o idioma para portugues
+bibliography: references.bib
+csl: ipea.csl
+---
+
+
+```{r setup}
+library(faraway)
+```
