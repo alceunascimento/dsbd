@@ -1,0 +1,73 @@
+---
+title: "Relatório Cheese"
+author: "Alceu"
+format: pdf
+---
+
+```{r setup, include=FALSE}
+# OBJETIVO:
+# 1. Utilizado os dados em `cheeses.csv`, crie um relatório descrevedo os
+# dados. Algumas inforações devem etar presentes no seu relatório:
+# a. Quantidade de observações e variáveis.
+# b. Inclua gráficos e tabelas para decrever os dados.
+
+
+# Carregar pacotes necessários
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+```
+
+
+```{r data}
+# Carregar dados
+cheeses <- read.csv("cheeses.csv")
+```
+
+```{r label, options}
+
+# Quantidade de observações e variáveis
+num_observations <- nrow(cheeses)
+num_variables <- ncol(cheeses)
+
+```
+
+
+```{r }
+# Mostrar as primeiras linhas do dataset
+kable(head(cheeses), caption = "Primeiras linhas dos dados de queijos") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+```
+
+
+```{r }
+# Estatísticas descritivas
+summary_table <- summary(cheeses)
+kable(summary_table, caption = "Estatísticas descritivas dos dados de queijos") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+```
+
+```{r }
+ggplot(cheeses, aes(x = variable_name)) +
+  geom_histogram(binwidth = 10, fill = "blue", color = "black") +
+  labs(title = "Histograma de Variable_name", x = "Variable_name", y = "Frequência")
+
+```
+
+
+```{r }
+ggplot(cheeses, aes(x = var1, y = var2)) +
+  geom_point() +
+  labs(title = "Gráfico de Dispersão entre Var1 e Var2", x = "Var1", y = "Var2")
+
+```
+
+```{r }
+ggplot(cheeses, aes(x = category_var, y = numeric_var)) +
+  geom_boxplot() +
+  labs(title = "Boxplot de Numeric_var por Category_var", x = "Category_var", y = "Numeric_var")
+
+```

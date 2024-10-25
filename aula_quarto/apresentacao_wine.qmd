@@ -1,0 +1,25 @@
+---
+title: "Apresentação Wine"
+author: "Alceu"
+format: revealjs
+---
+
+
+```{r setup, include=FALSE}
+# OBJETIVO:
+# 2. Crie uma apresentação utilizando os dados em `winequality-red.csv` e
+# `winequality-white.csv`  A sua apresentação deve conter
+# comparações entre os dois tipos de vinho.
+
+# Carregar pacotes necessários
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+```
+
+
+```{r data}
+# Carregar dados
+cheeses <- read.csv("cheeses.csv")
+```
