@@ -1,0 +1,5 @@
+print("Olá, vamos calcular seu Índice de Massa Corpórea")
+peso = float(input("Primeito, informe seu peso (em kilos): "))
+altura = float(input("Segundo, informe sua altura (em metros, por exemplo, 1.80m): "))
+imc = peso/(altura*altura)
+print("Seu Índice de Massa Corpórea é", imc)

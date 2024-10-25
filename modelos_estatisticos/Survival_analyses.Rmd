@@ -1,0 +1,380 @@
+---
+title: "DSBD - Análise de Sobrevivência"
+author: "José Luiz Padilha"
+date: "20 de setembro de 2024"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+# Exemplo 1: Estimador de Kaplan-Meier e Testes Não Paramétricos
+
+## Estimador de Kaplan-Meier
+
+Considere como exemplo os dados de hepatite. O estudo tinha como objetivo investigar o efeito da terapia com esteroide em pacientes com hepatite viral aguda. O evento de interesse é a morte do paciente.
+
+```{r fig.height=4.5, fig.width=10, message=FALSE, warning=FALSE}
+tempos <- c(1, 2, 3, 3, 3, 5, 5, 16, 16, 16, 16, 16, 16, 16, 16, 1, 1, 1, 1, 4, 5, 7, 8, 
+            10, 10, 12, 16, 16, 16)
+cens <- c(0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 
+          0, 0)
+grupos <- c(rep("Controle", 15), rep("Esteroide", 14))
+dados <- data.frame(tempos, cens, grupos)
+```
+
+O estimador de Kaplan-Meier é obtido por meia da função `survfit` do pacote `survival`.
+```{r}
+require(survival)
+require(survminer)
+ekm <- survfit(Surv(tempos, cens) ~ grupos, data = dados)
+summary(ekm)
+```
+
+A seguir, temos uma representação gráfica das curvas de sobrevivência estimadas, o que nos permite uma comparação visual entre funções de sobrevivência para os dois grupos.
+
+```{r, fig.width=12, fig.height=6}
+ggsurvplot(ekm, risk.table = TRUE)
+```
+
+
+Diferentes intervalos de confiança para a sobrevivência podem ser obtidos alterando o argumento `conf.type`. A opção padrão é `conf.type="log"`.
+```{r}
+#fórmula anterior apresentada
+ekm0 <- survfit(Surv(tempos, cens) ~ grupos, conf.type = "plain", data = dados)
+summary(ekm0)
+
+#transformação log-log para S(t)
+ekm1 <- survfit(Surv(tempos, cens) ~ grupos, conf.type = "log-log", data = dados)
+summary(ekm1)
+```
+
+
+A probabilidade estimada de um paciente do grupo esteroide sobreviver a 6 semanas obtida diretamente da curva de Kaplan-Meier é de $0,698$. No entanto, se uma interpolação linear for utilizada, obtém-se:
+$$
+\frac{7-5}{0,611-0,698}=\frac{6-5}{\hat{S}(6)-0,698}\Rightarrow \hat{S}(6)=0,655.
+$$
+
+Uma informação útil é o tempo mediano de vida. Como a curva de Kaplan-Meier é uma função escada, esta estimativa obtida por meio de uma interpolação linear é:
+$$
+\frac{10-8}{0,437-0,524}=\frac{MED-8}{0,500-0,524}\Rightarrow MED=t_{0,50}=8,55\ semanas.
+$$
+
+## Comparação das curvas de sobrevivência
+
+As curvas de Kaplan-Meier indicam que, possivelmente, a terapia com esteroide não é um tratamento adequado para pacientes com hepatite viral aguda. Procedemos com a aplicação dos testes logrank e de Wilcoxon para comparação das curvas de sobrevivência.
+```{r}
+#teste logrank
+survdiff(Surv(tempos,cens) ~ grupos, rho = 0)
+#teste wilcoxon
+survdiff(Surv(tempos, cens) ~ grupos, rho = 1)
+```
+
+Os testes apontam uma possível diferença entre os dois grupos. O pacote `coin` implementa uma série de testes para testar a igualdade de funções de sobrevivência em dois ou mais grupos independentes. Por exemplo, para realizarmos o teste de Tarone-Ware, podemos fazer:
+```{r}
+library(coin)
+logrank_test(Surv(tempos, cens) ~ factor(grupos), type = "Tarone-Ware")
+```
+
+\newpage
+
+# Exemplo 2: Estimador de Kaplan-Meier e Testes Não Paramétricos
+
+Um produtor de requeijão deseja comparar dois tipos de embalagens (A e B) para o seu produto. Ele deseja saber se existe diferença na durabilidade de seu produto com relação às embalagens. O produto dele é vendido em temperatura ambiente e sem conservantes. O evento de interesse é o aparecimento de algum tipo de fungo no produto.
+
+Vamos verificar se existe diferença entre as embalagens.
+```{r}
+tempos.a <- c(31, 40, 43, 44, 46, 46, 47, 48, 48, 49, 50, 50, 60, 60, 60, 60, 60, 60, 60, 
+              60)
+cens.a <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+tempos.b <- c(48, 48, 49, 49, 49, 49, 50, 50, 50, 50, 53, 53, 54, 54, 54, 55, 55, 55, 55, 
+              55)
+cens.b <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+tempos <- c(tempos.a, tempos.b)
+cens <- c(cens.a, cens.b)
+grupos <- c(rep("A", length(tempos.a)), rep("B", length(tempos.b)))
+dados <- data.frame(tempos, cens, grupos)
+ekm <- survfit(Surv(tempos, cens) ~ grupos, data = dados); summary(ekm)
+```
+
+A seguir, os gráficos com as curvas estimadas.
+```{r, fig.width=12, fig.height=6}
+ggsurvplot(ekm, risk.table = TRUE, pval = TRUE)
+```
+
+```{r}
+survdiff(Surv(tempos,cens) ~ grupos, rho = 0)#teste logrank
+```
+
+O teste logrank não apresenta diferença entre as curvas. Vamos construir uma curva de sobrevivência combinando todos os tempos de vida e plotá-la juntamente com o intervalo de confiança de 95%.
+```{r, fig.width=12, fig.height=6}
+ekm <- survfit(Surv(tempos,cens) ~ 1, data = dados); summary(ekm)
+ggsurvplot(ekm, risk.table = TRUE)
+```
+\newpage
+
+
+# Exemplo 3: Modelos Probabilísticos
+
+Vamos considerar os tempos de reincidência, em meses, de um grupo de 20 pacientes com câncer de bexiga que foram submetidos a um procedimento cirúrgico realizado por laser. 
+
+```{r, fig.width=10, fig.height=5}
+tempos <- c(3, 5, 6, 7, 8, 9, 10, 10, 12, 15, 15, 18, 19, 20, 22, 25, 28, 30, 40, 45)
+cens <- c(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+dados <- data.frame(tempos, cens)
+ekm <- survfit(Surv(tempos, cens) ~ 1, data = dados)
+summary(ekm)
+ggsurvplot(ekm, conf.int = FALSE, risk.table = TRUE)
+```
+
+Ajustaremos três distribuições: exponencial, Weibull e lognormal.
+```{r}
+ajust1 <- survreg(Surv(tempos, cens) ~ 1, dist = 'exponential')
+ajust1
+alpha <- exp(ajust1$coefficients[1])
+alpha
+#
+ajust2 <- survreg(Surv(tempos, cens) ~ 1, dist = 'weibull')
+ajust2
+alpha <- exp(ajust2$coefficients[1])
+gama <- 1/ajust2$scale
+cbind(gama, alpha)
+#
+ajust3 <- survreg(Surv(tempos, cens) ~ 1, dist = 'lognormal')
+ajust3
+```
+
+Com base nos valores acima, podemos calcular as sobrevivências estimadas. Por exemplo, para o tempo $t=10$ meses, obtemos:
+```{r}
+exp(-10/20.41)#exponencial
+exp(-(10/21.34)^1.54)#Weibull
+pnorm((-log(10) + 2.72)/0.76)#lognormal
+```
+
+As estimativas obtidas por meio dos modelos Weibull e lognormal são bem próximas. O mesmo não ocorre com o modelo exponencial, que apresenta um valor ligeiramente diferente dos obtidos pelos outros dois modelos.
+
+A seguir construímos as estimativas das funções de sobrevivência para os tempos de reincidência usando-se os modelos exponencial, Weibull e lognormal, além do Kaplan-Meier.
+```{r}
+time <- ekm$time
+st <- ekm$surv
+ste <- exp(-time/20.41)
+stw <- exp(-(time/21.34)^1.54)
+stln <- pnorm((-log(time) + 2.72)/0.76)
+round(cbind(time, st, ste, stw, stln), 3)
+```
+
+Para escolha dos modelos, vamos inicialmente usar o método gráfico comparando as estimativas de sobrevivência pelo estimador de Kaplan Meier versus as respectivas estimavas por cada um destes modelos.
+
+```{r, fig.width=12}
+par(mfrow = c(1, 3)) 
+plot(ste, st, pch = 16, ylim = range(c(0.0, 1)), xlim = range(c(0, 1)), 
+     ylab = "S(t): Kaplan-Meier", xlab = "S(t): exponencial")
+lines(c(0, 1), c(0, 1), type = "l", lty = 1)
+plot(stw, st, pch = 16, ylim = range(c(0.0, 1)), xlim = range(c(0, 1)), 
+     ylab = "S(t): Kaplan-Meier", xlab = "S(t): Weibull")
+lines(c(0, 1), c(0, 1), type = "l", lty = 1)
+plot(stln, st, pch = 16, ylim = range(c(0.0, 1)), xlim = range(c(0, 1)), 
+     ylab = "S(t): Kaplan-Meier", xlab = "S(t): log-normal")
+lines(c(0, 1), c(0, 1), type = "l", lty = 1)
+```
+
+O modelo exponencial não parece ser adequado, pois há afastamentos da reta $y=x$. Os modelos Weibull e lognormal acompanham melhor a reta de igualdade. Vamos proceder com a comparação dos gráficos linearizados. 
+
+```{r, fig.width=12}
+par(mfrow = c(1, 3)) 
+invst <- qnorm(st) 
+plot(time, -log(st), pch = 16, xlab = "tempos", ylab = "-log(S(t))") 
+plot(log(time), log(-log(st)), pch = 16, xlab = "log(tempos)", ylab = "log(-log(S(t)))")  
+plot(log(time), invst, pch = 16, xlab = "log(tempos)", ylab = expression(Phi^-1 * (S(t)))) 
+```
+
+Novamente vemos que o modelo exponencial não apresenta bom ajuste, enquanto os outros dois modelos mostram comportamentos similares.
+
+As curvas de sobrevivência estimadas pelos modelos Weibull e lognormal são mostradas a seguir, juntamente com a sobrevivência estimada por Kaplan-Meier.
+
+```{r, fig.width=12}
+par(mfrow = c(1, 2))
+plot(ekm, conf.int = F, xlab = "Tempos", ylab = "S(t)")
+lines(c(0, time), c(1, stw), lty = 2)
+legend(25, 0.8, lty = c(1, 2), c("Kaplan-Meier", "Weibull"), bty = "n", cex = 0.8)
+plot(ekm, conf.int = F, xlab = "Tempos", ylab = "S(t)")
+lines(c(0, time), c(1, stln), lty = 2)
+legend(25, 0.8, lty = c(1,2), c("Kaplan-Meier", "Log-normal"), bty = "n", cex = 0.8)
+```
+
+A figura indica que ambos os modelos apresentam ajustes satisfatórios. O logaritmo da verossimilhança dos modelos ajustados e o correspondente AIC são dadas por:
+```{r}
+cbind(loglik = c(ajust1$loglik[2], ajust2$loglik[2], ajust3$loglik[2]),
+      aic = c(extractAIC(ajust1)[2], extractAIC(ajust2)[2], extractAIC(ajust3)[2]))
+```
+
+
+Estimativas para o tempo médio são obtidas para os modelos Weibull e lognormal como, respectivamente:
+$$
+\begin{aligned}
+\hat{E}(T)=&21,34[\Gamma(1+(1/1,54))]=19,206 \ \mbox{meses},\\
+\hat{E}(T)=&\exp\left\{ 2,72+(0,76^2/2)\right\} = 20,263 \ \mbox{meses}.
+\end{aligned}
+$$
+Ainda, uma estimativa para o tempo mediano, obtida a partir da expressão dos percentis do modelo lognormal é
+$$
+\hat{t}_{0,5}=\exp(z_{0,5}0,76+2,72)=15,18 \ \mbox{meses}.
+$$
+O estimador de Kaplan Meier, fazendo uso de interpolação linear, fornece um valor de 17,05 meses como estimativa para o tempo mediano.
+
+\newpage
+
+# Exemplo 4: Modelos de Regressão Paramétricos
+
+Os dados utilizados provêm do Registro Hospitalar do Câncer (RHC) do Hospital Erasto Gaertner. O RHC foi implantado em novembro de 1992. A amostra é formada por pacientes com câncer maligno de localização topográfica C71 (encéfalo). Os registros vão de 17/05/1990 a 30/12/2001.
+
+A amostra é composta por 397 pacientes. As variáveis disponíveis são:
+
+* Sexo: 246 do sexo masculino e 151 do sexo feminino.
+* Idade: Varia de 0 a 77 anos, sem grandes concentrações
+* Tratamento realizado: 
+	- Radioterapia: 257
+	- Radioterapia+Cirurgia: 71
+	- Cirurgia: 21
+	- Outros: 48 (Quimioterapia, Hormonioterapia ou  combinações de tratamentos).
+* Estadiamento da doença:
+	- I:6	II: 40	III: 28	IV: 12
+	- Não pode ser aplicado: 2
+	- Não codificado: 308
+* AED: Avaliação da extensão da doença:
+  - Localizado: 350
+	- Extensão direta: 33
+	- Metástese: 5
+	- Não aplicável: 2
+	- Ignorado: 8
+
+Foram observadas 216 falhas e 181 censuras. As covariáveis utilizadas nesta aplicação foram: idade do paciente, sexo e tipo de tratamento realizado.
+
+
+```{r}
+encefalo <- read.table("enc.txt", h = T, dec = ",")
+```
+
+## Gráfico de Kaplan-Meier e testes logrank
+
+A seguir o gráfico marginal de sobrevivência estimada.
+
+```{r, fig.width=10, fig.height=4.5}
+ekm <- survfit(Surv(tempo, cens.1) ~ 1, data = encefalo)
+ggsurvplot(ekm, risk.table = TRUE)
+```
+
+Uma estimativa do tempo mediano é dada por
+```{r}
+ekm
+```
+
+Vamos agora comparar as curvas de sobrevivência por meio do teste logrank. As covariáveis idade e tratamento foram dicotomizadas para aplicação do teste.
+
+* Sexo
+```{r, fig.width=10, fig.height=5}
+levels(encefalo$Sexo) <- c("Masculino", "Feminino")
+ekm1 <- survfit(Surv(tempo, cens.1) ~ Sexo, data = encefalo)
+ggsurvplot(ekm1, risk.table = TRUE, pval = TRUE)
+survdiff(Surv(tempo, cens.1) ~ Sexo, rho = 0, data = encefalo) 
+```
+   
+O teste não aponta diferença entre os sexos.   
+   
+
+* Idade      
+```{r, fig.width=10, fig.height=5}
+ekm2 <- survfit(Surv(tempo, cens.1) ~ Ped, data = encefalo)
+ggsurvplot(ekm2, risk.table = TRUE, pval = TRUE)
+survdiff(Surv(tempo, cens.1) ~ Ped, rho = 0, data = encefalo) 
+```
+
+Uma diferença estatisticamente significativa foi encontrada entre os grupos de idade. Os pacientes mais velhos apresentaram sobrevida pior.
+
+* Tratamento
+
+```{r, fig.width=10, fig.height=5}
+ekm3 <- survfit(Surv(tempo, cens.1) ~ TRAT, data = encefalo)
+ggsurvplot(ekm3, risk.table = TRUE, pval = TRUE)
+survdiff(Surv(tempo, cens.1) ~ TRAT, rho = 0, data = encefalo) 
+```
+
+Com relação ao  grupo tratamento dicotomizado, uma diferença marginal foi obtida. Os pacientes do grupo radioterapia apresentaram sobrevida estimada menor.
+
+## Ajuste dos modelos de regressão
+
+Vamos avaliar o ajuste dos modelos paramétricos exponencial, Weibull e lognormal.
+```{r}
+m0e <- survreg(Surv(tempo, cens.1) ~ Idade + Sexo + TRAT, dis = "exponential", 
+               data = encefalo)
+summary(m0e)
+#
+m0w <- survreg(Surv(tempo, cens.1) ~ Idade + Sexo + TRAT, dis = "weibull", 
+               data = encefalo)
+summary(m0w)
+#
+m0l <- survreg(Surv(tempo, cens.1) ~ Idade + Sexo + TRAT, dis = "lognormal", 
+               data = encefalo)
+summary(m0l)
+```
+
+Como visto, apenas a variável Idade foi significativa. Vamos considerar então modelos apenas com este preditor.
+```{r}
+m1e <- survreg(Surv(tempo,cens.1)~Idade,dis="exponential",data=encefalo)
+m1w <- survreg(Surv(tempo,cens.1)~Idade,dis="weibull",data=encefalo)
+m1l <- survreg(Surv(tempo,cens.1)~Idade,dis="lognormal",data=encefalo)
+```
+
+A seguir a comparação dos modelos via AIC:
+```{r}
+extractAIC(m1e)[2]
+extractAIC(m1w)[2]
+extractAIC(m1l)[2]
+```
+
+O modelo lognormal resulta no menor valor de AIC. Para o modelo lognormal, temos as estimativas:
+```{r}
+summary(m1l)
+```
+
+A razão de tempos medianos entre dois indivíduos com diferença de um ano (pacientes com 26 e 25 anos de idade, por exemplo) é dada por $e^{-0.0321}=0,968$. 	Isso significa que o tempo mediano de vida vai diminuindo com a idade: pacientes mais jovens apresentam sobrevida superior àquela de pacientes mais velhos.
+
+
+
+
+# Exemplo 5: Modelo de Cox
+
+O modelo de Cox, que assume que os riscos são proporcionais, também foi ajustado aos dados desse estudo.
+```{r}
+cox0 <- coxph(Surv(tempo, cens.1) ~ Idade + Sexo + TRAT, data = encefalo)
+round(summary(cox0)$coef, 4) 
+```
+
+Novamente, apenas a variável idade foi significativa. O modelo final fica então dado por:
+```{r}
+cox1 <- coxph(Surv(tempo, cens.1) ~ Idade, data = encefalo)
+summary(cox1) 
+```
+
+A verificação de proporcionalidade dos riscos pode ser testada via:
+```{r}
+zph <- cox.zph(cox1)
+zph
+``` 
+
+O teste não rejeita a hipótese nula de riscos proporcionais. Tal conclusão também é obtida pelo exame dos resíduos de Schoenfeld.
+```{r, fig.width=12, fig.height=6}
+plot(zph, main = "Idade")
+```
+
+No modelo de Cox, a exponencial do parâmetro estimado é interpretada como razão de riscos:
+
+* O aumento em 1 ano de idade aumenta o risco em 1,7% de o paciente ir a óbito ($e^{0,0173})=1,0174$).
+* O aumento de 10 anos na idade (indivíduos com 40  e 30 anos, por exemplo) aumenta o risco de ir a óbito em 18,8% ($e^{10\times 0,0173}=1,1888$). 
+
+
+
+
+
+
