@@ -21,7 +21,7 @@ port <- 3306  # Porta padrão do MySQL
 
 
 # Crie a conexão
-con <- dbConnect(MariaDB(),
+con <- dbConnect(MySQL(),
                      dbname = dbname,
                      host = host,
                      port = port,
@@ -32,6 +32,7 @@ con <- dbConnect(MariaDB(),
 dbGetInfo(con)
 dbListTables(con)
 
+library(readr)
 
 teste <- dbGetQuery(con, "SELECT * FROM teste")
 rental <- dbGetQuery(con, "SELECT * FROM rental")
