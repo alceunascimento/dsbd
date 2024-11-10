@@ -1,0 +1,403 @@
+Starting Random Forest Parallel Processing
+
+Iteration 1/50 started at 18:20:24
+Iteration 2/50 started at 18:20:24
+Iteration 3/50 started at 18:20:24
+  Data split complete - Training: 3680, Test: 921
+  Data split complete - Training: 3680, Test: 921
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.93 seconds
+  Random Forest training complete - Duration: 24.39 seconds
+  Accuracies - Train: 0.995, Validation: 0.954, Test: 0.949
+Iteration 1 completed - Duration: 0.41 minutes
+
+Iteration 4/50 started at 18:20:48
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Accuracies - Train: 0.997, Validation: 0.951, Test: 0.950
+Iteration 2 completed - Duration: 0.42 minutes
+
+Iteration 5/50 started at 18:20:48
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.94 seconds
+  Accuracies - Train: 0.996, Validation: 0.967, Test: 0.939
+Iteration 3 completed - Duration: 0.42 minutes
+
+Iteration 6/50 started at 18:20:49
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.50 seconds
+  Accuracies - Train: 0.997, Validation: 0.958, Test: 0.965
+Iteration 4 completed - Duration: 0.40 minutes
+
+Iteration 7/50 started at 18:21:12
+  Random Forest training complete - Duration: 23.48 seconds
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Accuracies - Train: 0.997, Validation: 0.946, Test: 0.948
+Iteration 5 completed - Duration: 0.40 minutes
+
+Iteration 8/50 started at 18:21:12
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.93 seconds
+  Accuracies - Train: 0.995, Validation: 0.942, Test: 0.941
+Iteration 6 completed - Duration: 0.41 minutes
+
+Iteration 9/50 started at 18:21:13
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.91 seconds
+  Random Forest training complete - Duration: 23.79 seconds
+  Accuracies - Train: 0.996, Validation: 0.944, Test: 0.944
+Iteration 7 completed - Duration: 0.41 minutes
+
+Iteration 10/50 started at 18:21:36
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Accuracies - Train: 0.997, Validation: 0.948, Test: 0.965
+Iteration 8 completed - Duration: 0.41 minutes
+
+Iteration 11/50 started at 18:21:37
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.99 seconds
+  Accuracies - Train: 0.997, Validation: 0.946, Test: 0.945
+Iteration 9 completed - Duration: 0.41 minutes
+
+Iteration 12/50 started at 18:21:38
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.52 seconds
+  Random Forest training complete - Duration: 23.45 seconds
+  Accuracies - Train: 0.996, Validation: 0.954, Test: 0.950
+Iteration 10 completed - Duration: 0.40 minutes
+
+Iteration 13/50 started at 18:22:00
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Accuracies - Train: 0.996, Validation: 0.954, Test: 0.950
+Iteration 11 completed - Duration: 0.40 minutes
+
+Iteration 14/50 started at 18:22:01
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.80 seconds
+  Accuracies - Train: 0.997, Validation: 0.940, Test: 0.961
+Iteration 12 completed - Duration: 0.40 minutes
+
+Iteration 15/50 started at 18:22:02
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.86 seconds
+  Random Forest training complete - Duration: 23.60 seconds
+  Accuracies - Train: 0.997, Validation: 0.938, Test: 0.957
+Iteration 13 completed - Duration: 0.41 minutes
+
+Iteration 16/50 started at 18:22:25
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Accuracies - Train: 0.997, Validation: 0.944, Test: 0.955
+Iteration 14 completed - Duration: 0.40 minutes
+
+Iteration 17/50 started at 18:22:25
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.40 seconds
+  Accuracies - Train: 0.997, Validation: 0.952, Test: 0.946
+Iteration 15 completed - Duration: 0.40 minutes
+
+Iteration 18/50 started at 18:22:26
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.11 seconds
+  Accuracies - Train: 0.997, Validation: 0.954, Test: 0.953
+Iteration 16 completed - Duration: 0.41 minutes
+
+Iteration 19/50 started at 18:22:49
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.56 seconds
+  Accuracies - Train: 0.996, Validation: 0.962, Test: 0.958
+Iteration 17 completed - Duration: 0.42 minutes
+
+Iteration 20/50 started at 18:22:50
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.38 seconds
+  Accuracies - Train: 0.997, Validation: 0.952, Test: 0.954
+Iteration 18 completed - Duration: 0.41 minutes
+
+Iteration 21/50 started at 18:22:51
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.91 seconds
+  Accuracies - Train: 0.997, Validation: 0.946, Test: 0.945
+Iteration 19 completed - Duration: 0.41 minutes
+
+Iteration 22/50 started at 18:23:14
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.94 seconds
+  Accuracies - Train: 0.996, Validation: 0.948, Test: 0.947
+Iteration 20 completed - Duration: 0.41 minutes
+
+Iteration 23/50 started at 18:23:14
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.29 seconds
+  Accuracies - Train: 0.996, Validation: 0.962, Test: 0.941
+Iteration 21 completed - Duration: 0.41 minutes
+
+Iteration 24/50 started at 18:23:16
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.96 seconds
+  Accuracies - Train: 0.998, Validation: 0.943, Test: 0.949
+Iteration 22 completed - Duration: 0.41 minutes
+
+Iteration 25/50 started at 18:23:38
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.00 seconds
+  Accuracies - Train: 0.997, Validation: 0.946, Test: 0.951
+Iteration 23 completed - Duration: 0.41 minutes
+
+Iteration 26/50 started at 18:23:39
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.42 seconds
+  Accuracies - Train: 0.997, Validation: 0.940, Test: 0.955
+Iteration 24 completed - Duration: 0.42 minutes
+
+Iteration 27/50 started at 18:23:41
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.16 seconds
+  Accuracies - Train: 0.995, Validation: 0.959, Test: 0.944
+Iteration 25 completed - Duration: 0.41 minutes
+
+Iteration 28/50 started at 18:24:03
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.22 seconds
+  Accuracies - Train: 0.996, Validation: 0.961, Test: 0.953
+Iteration 26 completed - Duration: 0.41 minutes
+
+Iteration 29/50 started at 18:24:04
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.29 seconds
+  Accuracies - Train: 0.999, Validation: 0.955, Test: 0.940
+Iteration 27 completed - Duration: 0.40 minutes
+
+Iteration 30/50 started at 18:24:04
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.85 seconds
+  Accuracies - Train: 0.995, Validation: 0.959, Test: 0.952
+Iteration 28 completed - Duration: 0.40 minutes
+
+Iteration 31/50 started at 18:24:27
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 24.26 seconds
+  Random Forest training complete - Duration: 23.94 seconds
+  Accuracies - Train: 0.996, Validation: 0.957, Test: 0.953
+Iteration 29 completed - Duration: 0.41 minutes
+
+Iteration 32/50 started at 18:24:28
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Accuracies - Train: 0.997, Validation: 0.947, Test: 0.942
+Iteration 30 completed - Duration: 0.41 minutes
+
+Iteration 33/50 started at 18:24:29
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.67 seconds
+  Accuracies - Train: 0.997, Validation: 0.948, Test: 0.959
+Iteration 31 completed - Duration: 0.40 minutes
+
+Iteration 34/50 started at 18:24:51
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.49 seconds
+  Accuracies - Train: 0.997, Validation: 0.946, Test: 0.940
+Iteration 32 completed - Duration: 0.40 minutes
+
+Iteration 35/50 started at 18:24:52
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.81 seconds
+  Accuracies - Train: 0.996, Validation: 0.963, Test: 0.951
+Iteration 33 completed - Duration: 0.40 minutes
+
+Iteration 36/50 started at 18:24:53
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 22.94 seconds
+  Accuracies - Train: 0.998, Validation: 0.923, Test: 0.948
+Iteration 34 completed - Duration: 0.39 minutes
+
+Iteration 37/50 started at 18:25:15
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.58 seconds
+  Accuracies - Train: 0.996, Validation: 0.938, Test: 0.961
+Iteration 35 completed - Duration: 0.40 minutes
+
+Iteration 38/50 started at 18:25:16
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.47 seconds
+  Accuracies - Train: 0.997, Validation: 0.961, Test: 0.942
+Iteration 36 completed - Duration: 0.40 minutes
+
+Iteration 39/50 started at 18:25:17
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.29 seconds
+  Accuracies - Train: 0.997, Validation: 0.951, Test: 0.949
+Iteration 37 completed - Duration: 0.40 minutes
+
+Iteration 40/50 started at 18:25:38
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.37 seconds
+  Accuracies - Train: 0.998, Validation: 0.957, Test: 0.950
+Iteration 38 completed - Duration: 0.40 minutes
+
+Iteration 41/50 started at 18:25:40
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.66 seconds
+  Accuracies - Train: 0.996, Validation: 0.944, Test: 0.953
+Iteration 39 completed - Duration: 0.40 minutes
+
+Iteration 42/50 started at 18:25:41
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.23 seconds
+  Accuracies - Train: 0.998, Validation: 0.947, Test: 0.944
+Iteration 40 completed - Duration: 0.39 minutes
+
+Iteration 43/50 started at 18:26:02
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.44 seconds
+  Accuracies - Train: 0.997, Validation: 0.958, Test: 0.946
+Iteration 41 completed - Duration: 0.40 minutes
+
+Iteration 44/50 started at 18:26:04
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.37 seconds
+  Accuracies - Train: 0.997, Validation: 0.946, Test: 0.945
+Iteration 42 completed - Duration: 0.40 minutes
+
+Iteration 45/50 started at 18:26:05
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.38 seconds
+  Accuracies - Train: 0.997, Validation: 0.951, Test: 0.947
+Iteration 43 completed - Duration: 0.40 minutes
+
+Iteration 46/50 started at 18:26:26
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.52 seconds
+  Accuracies - Train: 0.998, Validation: 0.955, Test: 0.955
+Iteration 44 completed - Duration: 0.40 minutes
+
+Iteration 47/50 started at 18:26:28
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.88 seconds
+  Accuracies - Train: 0.995, Validation: 0.952, Test: 0.952
+Iteration 45 completed - Duration: 0.41 minutes
+
+Iteration 48/50 started at 18:26:29
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.46 seconds
+  Accuracies - Train: 0.996, Validation: 0.954, Test: 0.949
+Iteration 46 completed - Duration: 0.40 minutes
+
+Iteration 49/50 started at 18:26:50
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.57 seconds
+  Accuracies - Train: 0.997, Validation: 0.942, Test: 0.947
+Iteration 47 completed - Duration: 0.40 minutes
+
+Iteration 50/50 started at 18:26:52
+  Data split complete - Training: 3680, Test: 921
+  Second split complete - Final Training: 2944, Validation: 736
+  Starting Random Forest training...
+  Random Forest training complete - Duration: 23.39 seconds
+  Accuracies - Train: 0.997, Validation: 0.948, Test: 0.954
+Iteration 48 completed - Duration: 0.40 minutes
+
+  Random Forest training complete - Duration: 22.90 seconds
+  Accuracies - Train: 0.996, Validation: 0.948, Test: 0.938
+Iteration 49 completed - Duration: 0.39 minutes
+
+  Random Forest training complete - Duration: 23.18 seconds
+  Accuracies - Train: 0.998, Validation: 0.944, Test: 0.948
+Iteration 50 completed - Duration: 0.39 minutes
+
+Total execution time: 6.96 minutes
