@@ -18,7 +18,7 @@
 # Logaritmo do antígeno PSA / lPSA
 
 
-dados=read.delim(file="D:/Users/pedro/Documents/MEGA/Documentos/trabalho/5-Professor Classe A - UFPR/06-especialização/aula_regl/bases de dados/prostata/prostate.txt")
+dados=read.delim(file="~/dsbd/modelos_estatisticos/pedro/bases de dados/prostata/prostate.txt")
 names(dados)
 y=dados[,"lpsa"]
 dados=dados[,-c(1,10,11)]

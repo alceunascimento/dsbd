@@ -2,7 +2,7 @@ library(corrplot)
 library(glmnet)
 library(grpreg)
 library(pROC)
-setwd("D:/Users/pedro/Documents/MEGA/Documentos/trabalho/5-Professor Classe A - UFPR/06-especialização/aula_regl/bases de dados/handwritten")
+setwd("~/dsbd/modelos_estatisticos/pedro/bases de dados/handwritten")
 
 # Hand-Written Digits: Base que possui 200 observações e 256 variáveis. Cada
 # observação representa uma imagem 16x16 de um número escrito a mão. 
