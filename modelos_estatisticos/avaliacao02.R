@@ -429,8 +429,6 @@ custo_falso_positivo <- 1
 # A fórmula ajusta o valor Youden com base nos custos relativos e prevalência
 K <- youden_threshold * (custo_falso_negativo * prevalencia) / 
   (custo_falso_negativo * prevalencia + custo_falso_positivo * (1 - prevalencia))
-
-# Mostrar o valor de K ajustado
 K
 
 
