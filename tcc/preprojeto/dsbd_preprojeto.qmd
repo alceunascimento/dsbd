@@ -8,6 +8,7 @@ editor: visual
 
 # Título do Projeto
 
+
 Análise de Decisões de Admissibilidade de REsp pela 1ª Vice-Presidência do TJPR 
 utilizando Técnicas de Ciência de Dados
 
