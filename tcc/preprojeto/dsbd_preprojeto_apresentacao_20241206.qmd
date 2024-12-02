@@ -1,0 +1,89 @@
+---
+title: "Jurimetria"
+subtitle: "Análise de Decisões de Admissibilidade de REsp pela 1ª Vice-Presidência do TJPR utilizando Técnicas de Ciência de Dados"
+author: "Alceu Eilert Nascimento"
+format:
+  revealjs:
+    slide-number: c/t
+    width: 1600
+    height: 900
+    transition: fade
+    incremental: true
+    scrollable: true
+    theme: simple
+    reference-location: document
+    footer: "DSBD Turma 2024-1 | Apresentação do projeto de pesquisa"
+    footnotes: true 
+    self-contained: true
+bibliography: references.bib
+csl: "ipea.csl"
+---
+
+## Objetivos do Projeto
+
+1.  Coletar **148 mil decisões judiciais** do TJPR sobre admissibilidade de recurso especial.
+2.  Processar, organizar e armazenar os dados em **DuckDB** de @muhleisenDuckdbDBIPackage2024.
+3.  Criar um website para disponibilização do banco para outros pesquisadores.
+4.  Analisar dados com algoritmos como **Apriori** de @agrawalFastAlgorithmsMining1994 e grafos paralelos.
+5.  Identificar características que influenciam os resultados de recursos especiais.
+
+------------------------------------------------------------------------
+
+## Desafios de Coleta e Extração
+
+-   **Origem**: TJPR website de jurisprudência.
+-   **Formato**: Páginas HTML semi-estruturadas.
+-   **Conteúdo**: Informações sobre número do processo, decisão e partes.
+-   Dados não estruturados e falta de APIs.
+-   Limites de requisições e inconsistências no formato HTML.
+
+------------------------------------------------------------------------
+
+## Etapas do Desenvolvimento
+
+### 1. Construção de um Webcrawler
+
+-   Linguagem: **Python**.
+-   Bibliotecas: **Selenium** e **BeautifulSoup**.
+-   Procedimentos:
+    -   Navegação automatizada.
+    -   Controle de erros e retries.
+    -   Armazenamento[^1] em JSON (1:1).
+
+[^1]: Adotar estrutura e dicionário utilizado pelo Superior Tribunal de Justiça.
+
+## Etapas do Desenvolvimento
+
+### 2. Processamento e Consolidação
+
+-   Parsing com **BeautifulSoup**.
+-   Limpeza e padronização de dados.
+-   Banco **DuckDB**:
+    -   Importação dos dados JSON.
+    -   Estruturação com índices e backups.
+
+------------------------------------------------------------------------
+
+## Análise de Dados
+
+1.  **Algoritmo Apriori**:
+    -   Descobrir padrões entre características e resultados de decisões.
+    -   Utilização de métricas como suporte, confiança e lift.
+2.  **Grafos Paralelos**:
+    -   Visualização multidimensional.
+    -   Identificar padrões e tendências em decisões judiciais.
+
+------------------------------------------------------------------------
+
+## Resultados Esperados e Conclusão
+
+-   Banco de dados consolidado e website funcional.
+-   Identificação de padrões nas decisões judiciais.
+-   Integração de técnicas de ciência de dados com estudos jurídicos.
+-   Transparência no processo decisório do sistema judiciário.
+-   Contribuição para a eficiência e clareza nas admissibilidades recursais.
+
+------------------------------------------------------------------------
+
+## Referências
+
