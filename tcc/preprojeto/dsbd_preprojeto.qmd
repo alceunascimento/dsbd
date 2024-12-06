@@ -9,7 +9,13 @@ bibliography: references.bib
 
 # Título do Projeto
 
+<<<<<<< HEAD
 Análise de Decisões de Admissibilidade de REsp pela 1ª Vice-Presidência do TJPR utilizando Técnicas de Ciência de Dados
+=======
+
+Análise de Decisões de Admissibilidade de REsp pela 1ª Vice-Presidência do TJPR 
+utilizando Técnicas de Ciência de Dados
+>>>>>>> c857e01e61f7e2df7d4b08a3075026fb6458a836
 
 # Objetivo Geral
 
