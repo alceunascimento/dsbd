@@ -7,12 +7,15 @@ library(sparklyr)
 library(ggplot2)
 
 # SET SPARK ----
+
+Sys.setenv(SPARK_HOME = "~/opt/spark-3.5.3-bin-hadoop3")
+
 sc <- spark_connect(master="local")
 spark_version(sc)
 
 
-GET DATA ----
-setwd("~/Documentos/data/")
+# GET DATA ----
+setwd("~/Documents/data/")
 
 
 df_acpt <- spark_read_csv(sc,
@@ -59,4 +62,4 @@ df_rjct |> filter(Amount_Requested <= 100000) |>
 
 ##    -------
 
-
+spark_disconnect(sc)

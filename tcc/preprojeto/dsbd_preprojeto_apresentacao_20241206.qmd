@@ -25,17 +25,22 @@ csl: "ipea.csl"
 2.  Processar, organizar e armazenar os dados em **DuckDB** de @muhleisenDuckdbDBIPackage2024.
 3.  Criar um website para disponibilização do banco para outros pesquisadores.
 4.  Analisar dados com algoritmos como **Apriori** de @agrawalFastAlgorithmsMining1994 e grafos paralelos.
-5.  Identificar características que influenciam os resultados de recursos especiais.
+5.  Identificar características que influenciam os resultados de admissibilidade de recursos especiais.
 
 ------------------------------------------------------------------------
 
 ## Desafios de Coleta e Extração
 
--   **Origem**: [TJPR website](https://portal.tjpr.jus.br/jurisprudencia/) de jurisprudência.
--   **Formato**: Páginas HTML semi-estruturadas.
--   **Conteúdo**: Informações sobre número do processo, decisão e partes.
--   Dados não estruturados e falta de APIs.
--   Limites de requisições e inconsistências no formato HTML.
+-   **Origens**:
+      - Principal: [TJPR website](https://portal.tjpr.jus.br/jurisprudencia/) de jurisprudência.
+      - Complementar: [DataJud do CNJ](https://www.cnj.jus.br/sistemas/datajud/)
+  
+-   **Formato**: Páginas `.html` semi-estruturadas (TJPR) e API com saida em `.json`.
+-   **Conteúdo**: Dados cadastrais dos processos e conteudo das decisoes.
+
+-   **Desafios**:
+      - Dados não estruturados e falta de APIs.
+      - Limites de requisições e inconsistências no formato HTML.
 
 ------------------------------------------------------------------------
 
@@ -81,8 +86,9 @@ csl: "ipea.csl"
 
 -   Parsing com **BeautifulSoup**.
 -   Limpeza e padronização de dados.
+-   Agregar dados complementares (DataJud)
 -   Banco **DuckDB**:
-    -   Importação dos dados JSON.
+    -   Importação dos dados `.json`.
     -   Estruturação com índices e backups.
 
 ------------------------------------------------------------------------
