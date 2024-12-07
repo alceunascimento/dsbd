@@ -1,7 +1,7 @@
 ---
 title: "Jurimetria"
 subtitle: "Análise de Decisões de Admissibilidade de REsp pela 1ª Vice-Presidência do TJPR utilizando Técnicas de Ciência de Dados"
-author: "Alceu Eilert Nascimento"
+author: "Alceu Eilert Nascimento (Orientador: Prof. Dr. André Ricardo Abed Grégio)"
 format:
   revealjs:
     slide-number: c/t
@@ -31,7 +31,7 @@ csl: "ipea.csl"
 
 ## Desafios de Coleta e Extração
 
--   **Origem**: TJPR website de jurisprudência.
+-   **Origem**: [TJPR website](https://portal.tjpr.jus.br/jurisprudencia/) de jurisprudência.
 -   **Formato**: Páginas HTML semi-estruturadas.
 -   **Conteúdo**: Informações sobre número do processo, decisão e partes.
 -   Dados não estruturados e falta de APIs.
@@ -48,9 +48,32 @@ csl: "ipea.csl"
 -   Procedimentos:
     -   Navegação automatizada.
     -   Controle de erros e retries.
-    -   Armazenamento[^1] em JSON (1:1).
+    -   Armazenamento em JSON (1:1).
 
-[^1]: Adotar estrutura e dicionário utilizado pelo Superior Tribunal de Justiça.
+------------------------------------------------------------------------
+
+![](images/screenshot_tjpr_juris.png){fig-align="center"}
+
+------------------------------------------------------------------------
+
+![](images/screenshot_tjpr_juris_inspector.png){fig-align="center"}
+
+------------------------------------------------------------------------
+
+```         
+[
+    {
+        "id": "4100000027264661",
+        "numeroProcesso": "0002680-31.2023.8.16.0001",
+        "descricaoClasse": "",
+        "nomeOrgaoJulgador": "18ª Câmara Cível",
+        "relator": "substituta luciane bortoleto",
+        "dataPublicacao": "Thu Feb 29 00:00:00 BRT 2024",
+        "ementa": "APELAÇÕES CÍVEIS...",
+        "tipoDeDecisao": "Acórdão",
+        "dataDecisao": "Wed Feb 28 00:00:00 BRT 2024",
+        "decisao": "VISTOS, relatados e discutidos ....
+```
 
 ## Etapas do Desenvolvimento
 
@@ -86,4 +109,3 @@ csl: "ipea.csl"
 ------------------------------------------------------------------------
 
 ## Referências
-
